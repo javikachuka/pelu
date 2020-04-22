@@ -20,6 +20,8 @@ class UserController extends Controller
 
 
     public function save(Request $request){
+
+
         $user = new User() ;
         $user->name = $request->name;
         $user->apellido = $request->apellido;
