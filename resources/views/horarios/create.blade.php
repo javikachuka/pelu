@@ -10,9 +10,10 @@
     </div>
     <form class="form-group " method="POST" action="{{route("horarios.save")}}" >
     <div class="card-body">
+        @include('messageError')
         <div class="form-group">
             <label for="nombre">Nombre del Horario</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Por ej. Horario Nocturno" required>
+            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Por ej. Horario Nocturno" >
         </div>
         <label for="">Dias Semanales</label>
         <div class="row">
