@@ -13,13 +13,13 @@
         @include('messageError')
         <div class="form-group">
             <label for="nombre">Nombre del Horario</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Por ej. Horario Nocturno" >
+            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Por ej. Horario Nocturno" required>
         </div>
         <label for="">Dias Semanales</label>
         <div class="row">
             @foreach ($dias as $dia)
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" value="{{$dia->dia}}" name="dias[]" id="dia+{{$dia->id}}">
+                <input type="checkbox" class="custom-control-input" value="{{$dia->id}}" name="dias[]" id="dia+{{$dia->id}}">
                 <label class="custom-control-label" for="dia+{{$dia->id}}">{{$dia->dia}}</label>
             </div>
             @endforeach

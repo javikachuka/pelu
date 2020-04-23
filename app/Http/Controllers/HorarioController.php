@@ -22,13 +22,28 @@ class HorarioController extends Controller
     }
 
     public function save(Request $request){
-        $this->validacionCamposHorario;
-        $comienzo = Carbon::now()->setTimeFrom($request->comienzo) ;
-        $fin = Carbon::now()->setTimeFrom($request->fin) ;
-        if($comienzo->greaterThan($fin)){
-            return redirect()->back()->withErrors([
-                'comparacion' => 'La hora de comienzo debe ser menor a la hora de fin'
-            ]);
+        $this->validacionCamposHorario($request);
+        $this->validacionRangoHorario($request);
+        $dias = $request->dias ;
+        foreach ($dias as $dia ) {
+            $diaExistente = Dia::find($dia) ;
+            $horarios = $diaExistente->horarios ;
+            if(!$horarios->isEmpty()){
+                foreach ($horarios as $horario) {
+                    $comienzo = Carbon::now()->setTimeFrom($request->comienzo) ;
+                    $fin = Carbon::now()->setTimeFrom($request->fin) ;
+                    $comienzoRegistrado = Carbon::now()->setTimeFrom($horario->comienzo) ;
+                    $finRegistrado = Carbon::now()->setTimeFrom($horario->fin) ;
+                    if($comienzo->lessThanOrEqualTo($finRegistrado)){
+                        return redirect()->back()->withErrors([
+                            'existencia' => 'Uno de los dias marcados ya tiene registrado un horario en las horas seleccionadas, ingrese un horario o dia diferente por favor'
+                        ]) ;
+
+                    }
+                }
+            }
+
+
         }
         $horario = new Horario() ;
         $horario->nombre = $request->nombre ;
@@ -40,13 +55,26 @@ class HorarioController extends Controller
 
     private function validacionCamposHorario(Request $request){
         $rules = [
-            'name'      => 'required|max:255' ,
-            'dias[]'    => 'required',
+            'nombre'    => 'required|max:255|unique:horarios,nombre' ,
+            'dias'      => 'required',
             'comienzo'  => 'required',
             'fin'       => 'required'
         ] ;
 
-        $this->validate($request, $rules);
+        $messages = [
+            'dias.required'  =>  'Debe seleccionar al menos un dia'
+        ] ;
 
+        $this->validate($request, $rules , $messages);
+    }
+
+    private function validacionRangoHorario(Request $request){
+        $comienzo = Carbon::now()->setTimeFrom($request->comienzo) ;
+        $fin = Carbon::now()->setTimeFrom($request->fin) ;
+        if($comienzo->greaterThan($fin)){
+            return redirect()->back()->withErrors([
+                'comparacion' => 'La hora de comienzo debe ser menor a la hora de fin'
+            ]);
+        }
     }
 }
