@@ -1,4 +1,7 @@
-@include('raiz')
+@extends('raiz')
+
+
+@section('content')
 
 <div class="card">
     <div class="card-header">
@@ -41,3 +44,4 @@
     </form>
 
 </div>
+@endsection

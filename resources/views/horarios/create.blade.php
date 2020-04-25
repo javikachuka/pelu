@@ -13,24 +13,24 @@
         @include('messageError')
         <div class="form-group">
             <label for="nombre">Nombre del Horario</label>
-            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Por ej. Horario Nocturno" required>
+            <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}"placeholder="Por ej. Horario Nocturno" required>
         </div>
         <label for="">Dias Semanales</label>
         <div class="row">
             @foreach ($dias as $dia)
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" value="{{$dia->id}}" name="dias[]" id="dia+{{$dia->id}}">
+                <input type="checkbox" class="custom-control-input" value="{{$dia->id}}" name="dias[]" id="dia+{{$dia->id}}" @if(is_array(old('dias')) && in_array($dia->id, old('dias'))) checked @endif>
                 <label class="custom-control-label" for="dia+{{$dia->id}}">{{$dia->dia}}</label>
             </div>
             @endforeach
         </div>
         <div class="form-group">
             <label for="horaComienzo">Hora de Comienzo</label>
-            <input type="time" class="form-control" id="horaComienzo" name="comienzo" step="1800" required>
+            <input type="time" class="form-control" id="horaComienzo" name="comienzo" value="{{ old('comienzo') }}" step="1800" required>
         </div>
         <div class="form-group">
             <label for="horaFin">Hora de Fin</label>
-            <input type="time" class="form-control" id="horaFin" name="fin" step="1800" required>
+            <input type="time" class="form-control" id="horaFin" name="fin" step="1800" value="{{ old('fin') }}" required>
         </div>
         {{-- <div class="form-group">
             <label for="duracion">Duracion de cada Turno</label>

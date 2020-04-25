@@ -3,7 +3,9 @@
 namespace App;
 
 use Caffeinated\Shinobi\Concerns\HasRolesAndPermissions;
-use Caffeinated\Shinobi\Models\Role;use Illuminate\Notifications\Notifiable;
+use Caffeinated\Shinobi\Models\Role;
+use Carbon\Carbon;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -39,8 +41,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function roles()
-    {
+
+    public function roles(){
         return $this->belongsToMany(Role::class);
+    }
+
+    public function getFecha()
+    {
+        $date = Carbon::create($this->fecha_nacimiento)->format('d/m/Y');
+        return $date;
+    }
+
+    public function getEdad(){
+        $date = Carbon::create($this->fecha_nacimiento) ;
+        return $date->age;
     }
 }

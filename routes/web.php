@@ -30,6 +30,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('users', 'UserController@index')->name('users.index') ;
     Route::get('users/create', 'UserController@create')->name('users.create') ;
     Route::post('users', 'UserController@save')->name('users.save') ;
+
+    Route::get('turnos/create', 'TurnoController@create')->name('turnos.create') ;
+
 }) ;
 
 

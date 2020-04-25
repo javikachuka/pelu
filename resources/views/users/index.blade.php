@@ -1,4 +1,6 @@
-@include('raiz')
+@extends('raiz')
+@section('content')
+
 <div class="card">
     <div class="card-header">
         <h3>Clientes Registrados</h3>
@@ -9,10 +11,11 @@
         <table class="table">
             <thead class="thead-dark">
                 <tr>
+                    <th>#</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>DNI</th>
-                    <th>Cumpleanios</th>
+                    <th>Fecha de Nacimiento</th>
                     <th>Edad</th>
                     <th>Acciones</th>
                 </tr>
@@ -20,13 +23,20 @@
             <tbody>
                 @foreach ($users as $user)
                 <tr>
+                    <th>{{$user->id}}</th>
                     <th>{{$user->name}}</th>
                     <th>{{$user->apellido}}</th>
                     <th>{{$user->dni}}</th>
-                    <td>{{$user->fecha_nacimiento}}</td>
+                    <td>{{$user->getFecha()}}</td>
+                    <td>{{$user->getEdad()}} años</td>
+                    <td class="d-flex justify-content-center ">
+                        <a class="p-1 text-primary"><i class="fal fa-edit"></i></a>
+                        <a class="p-1 text-danger"><i class="fal fa-trash-alt"></i></a>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 </div>
+@endsection

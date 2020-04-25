@@ -7,9 +7,16 @@
     <title>Laravel</title>
     <link rel="stylesheet" href="{{ asset('css/fontawesome/css/all.min.css') }}">
     <link rel="stylesheet" href=" {{asset('css/app.css')}} ">
+    <link rel="stylesheet" href=" {{asset('css/bootstrap-datepicker.min.css')}} ">
 </head>
 <body>
     @include('navbar')
-    <script src="{{asset('js/app.js')}}" charset="utf-8"></script>
+    <div class="content">
+        @yield('content')
+    </div>
+    <script src="{{asset('js/app.js')}}"></script>
+    <script src="{{asset('js/bootstrap-datepicker.min.js')}}"></script>
+    <script src="{{asset('js/idioma_datepicker.js')}}"></script>
+    @stack('scripts')
 </body>
 </html>

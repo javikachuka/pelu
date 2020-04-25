@@ -23,33 +23,46 @@ class HorarioController extends Controller
 
     public function save(Request $request){
         $this->validacionCamposHorario($request);
-        $this->validacionRangoHorario($request);
+        $comienzo = Carbon::now()->setTimeFrom($request->comienzo) ;
+        $fin = Carbon::now()->setTimeFrom($request->fin) ;
+        if($comienzo->greaterThan($fin)){
+            return redirect()->back()->withErrors([
+                'comparacion' => 'La hora de comienzo debe ser menor a la hora de fin'
+            ])->withInput();
+        }
         $dias = $request->dias ;
+        // return $dias ;
         foreach ($dias as $dia ) {
             $diaExistente = Dia::find($dia) ;
             $horarios = $diaExistente->horarios ;
+
             if(!$horarios->isEmpty()){
                 foreach ($horarios as $horario) {
-                    $comienzo = Carbon::now()->setTimeFrom($request->comienzo) ;
-                    $fin = Carbon::now()->setTimeFrom($request->fin) ;
+                    // $comienzo = Carbon::now()->setTimeFrom($request->comienzo) ;
+                    // $fin = Carbon::now()->setTimeFrom($request->fin) ;
                     $comienzoRegistrado = Carbon::now()->setTimeFrom($horario->comienzo) ;
                     $finRegistrado = Carbon::now()->setTimeFrom($horario->fin) ;
-                    if($comienzo->lessThanOrEqualTo($finRegistrado)){
+                    if($comienzo->between($comienzoRegistrado,$finRegistrado)){
                         return redirect()->back()->withErrors([
-                            'existencia' => 'Uno de los dias marcados ya tiene registrado un horario en las horas seleccionadas, ingrese un horario o dia diferente por favor'
-                        ]) ;
+                            'existencia' => 'Uno de los dias marcados ya tiene registrado un horario de comienzo registrado en las hora seleccionada, ingrese un horario o dia diferente por favor'
+                        ])->withInput() ;
 
+                    }else{
+                        if($fin->between($comienzoRegistrado,$finRegistrado)){
+                            return redirect()->back()->withErrors([
+                                'existencia' => 'Uno de los dias marcados ya tiene registrado un horario de fin registrado en las hora seleccionada, ingrese un horario o dia diferente por favor'
+                            ])->withInput() ;
+                        }
                     }
                 }
             }
-
-
         }
         $horario = new Horario() ;
         $horario->nombre = $request->nombre ;
         $horario->comienzo = $request->comienzo ;
         $horario->fin = $request->fin ;
         $horario->save() ;
+        $horario->dias()->sync($request->dias) ;
         return redirect()->route('horarios.index') ;
     }
 
@@ -68,13 +81,43 @@ class HorarioController extends Controller
         $this->validate($request, $rules , $messages);
     }
 
-    private function validacionRangoHorario(Request $request){
-        $comienzo = Carbon::now()->setTimeFrom($request->comienzo) ;
-        $fin = Carbon::now()->setTimeFrom($request->fin) ;
-        if($comienzo->greaterThan($fin)){
-            return redirect()->back()->withErrors([
-                'comparacion' => 'La hora de comienzo debe ser menor a la hora de fin'
-            ]);
-        }
-    }
+    // private function validacionRangoHorario(Request $request){
+    //     $comienzo = Carbon::now()->setTimeFrom($request->comienzo) ;
+    //     $fin = Carbon::now()->setTimeFrom($request->fin) ;
+    //     if($comienzo->greaterThan($fin)){
+    //         return redirect()->back()->withErrors([
+    //             'comparacion' => 'La hora de comienzo debe ser menor a la hora de fin'
+    //         ]);
+    //     }
+    // }
+
+    // private function validacionHorarioExistente(Request $request){
+    //     $dias = $request->dias ;
+    //     return $dias ;
+    //     foreach ($dias as $dia ) {
+    //         $diaExistente = Dia::find($dia) ;
+    //         return $horarios = $diaExistente->horarios ;
+
+    //         if(!$horarios->isEmpty()){
+    //             foreach ($horarios as $horario) {
+    //                 $comienzo = Carbon::now()->setTimeFrom($request->comienzo) ;
+    //                 $fin = Carbon::now()->setTimeFrom($request->fin) ;
+    //                 $comienzoRegistrado = Carbon::now()->setTimeFrom($horario->comienzo) ;
+    //                 $finRegistrado = Carbon::now()->setTimeFrom($horario->fin) ;
+    //                 if($comienzo->between($comienzoRegistrado,$finRegistrado)){
+    //                     return redirect()->back()->withErrors([
+    //                         'existencia' => 'Uno de los dias marcados ya tiene registrado un horario de comienzo registrado en las hora seleccionada, ingrese un horario o dia diferente por favor'
+    //                     ]) ;
+
+    //                 }else{
+    //                     if($fin->between($comienzoRegistrado,$finRegistrado)){
+    //                         return redirect()->back()->withErrors([
+    //                             'existencia' => 'Uno de los dias marcados ya tiene registrado un horario de fin registrado en las hora seleccionada, ingrese un horario o dia diferente por favor'
+    //                         ]) ;
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 }

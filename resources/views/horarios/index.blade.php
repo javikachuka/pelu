@@ -10,6 +10,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th>Nombre</th>
+                    <th>Dias de Trabajo</th>
                     <th>Hora de Comienzo</th>
                     <th>Hora de Fin</th>
                     <th>Acciones</th>
@@ -19,6 +20,11 @@
                 @foreach ($horarios as $horario)
                 <tr>
                     <th>{{$horario->nombre}}</th>
+                    <th>
+                    @foreach ($horario->dias as $dia)
+                        <span class="badge badge-info">{{$dia->dia}}</span>
+                    @endforeach
+                    </th>
                     <th>{{$horario->comienzo}}</th>
                     <td>{{$horario->fin}}</td>
                 </tr>
