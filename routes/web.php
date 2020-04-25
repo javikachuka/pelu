@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('users', 'UserController@save')->name('users.save') ;
 
     Route::get('turnos/create', 'TurnoController@create')->name('turnos.create') ;
+    Route::get('turnos/obtener', 'TurnoController@get')->name('turnos.obtener') ;
 
 }) ;
 
