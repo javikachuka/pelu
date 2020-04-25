@@ -9,6 +9,7 @@
         <a class="nav-item nav-link" href=" {{ route('users.index') }} ">Clientes</a>
         <a class="nav-item nav-link" href=" {{route('turnos.create')}} ">Turnos</a>
         <a class="nav-item nav-link" href="{{ route('horarios.index') }}">Horarios</a>
+        <a class="nav-item nav-link" href="{{ route('servicios.index') }}">Servicios</a>
       </div>
     </div>
   </nav>
