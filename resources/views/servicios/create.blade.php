@@ -4,7 +4,7 @@
     <div class="card-header">
         <h3>Creacion de servicios</h3>
         <ul>
-            <li>El servicio implica, los servicios que ofrese la empresa para sus clientes</li>
+            <li>El servicio implica, los servicios que ofrece la empresa para sus clientes</li>
             <li>La duracion del servicio se utilzara para calcular los turnos de sus clientes</li>
         </ul>
     </div>

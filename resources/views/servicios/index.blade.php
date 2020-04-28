@@ -9,7 +9,7 @@
         <table class="table">
             <thead class="thead-dark">
                 <tr>
-                    <th>ID</th>
+                    <th>#</th>
                     <th>Servicio</th>
                     <th>Duracion (Minutos)</th>
                 </tr>

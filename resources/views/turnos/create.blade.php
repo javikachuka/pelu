@@ -12,6 +12,15 @@
     @include('messageError')
     <form class="form-group " method="POST" action="{{route("users.save")}}">
         <div class="card-body">
+            <div class="form-group">
+                <label for="servicio">Servicio</label>
+                <select name="servicio_id" id="servicio_id" class="form-control" required>
+                    <option value="" selected disabled>--Seleccione--</option>
+                    @foreach ($servicios as $servicio)
+                    <option value="{{$servicio->id}}">{{$servicio->servicio}}</option>
+                    @endforeach
+                </select>
+            </div>
             <label for="datepicker">Dia del Turno</label>
             <div id="datepicker" data-date="12/03/2012"></div>
             <input type="hidden" id="my_hidden_input">
@@ -37,10 +46,15 @@
             $('#datepicker').datepicker('getFormattedDate')
         );
 
-            var url = "{{ route('turnos.obtener') }}" ;
+            var servicio = $('#servicio_id').val() ;
+            var fecha = $('#my_hidden_input').val() ;
+            fecha = fecha.replace(/\//g, "-");
+            var url = "{{ route('turnos.obtener', [":id" , ":fecha"]) }}" ;
+            url = url.replace(':id' , servicio) ;
+            url = url.replace(':fecha' , fecha) ;
             //AJAX
             $.get(url , function(data){
-                console.log(data);
+                console.log(data) ;
                 var html_select = '<option value="" selected disabled>--Seleccione--</option>' ;
                 var html_select ;
                 for (var i = 0; i < data.length; i++) {
