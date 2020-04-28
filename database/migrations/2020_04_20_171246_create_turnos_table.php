@@ -15,14 +15,14 @@ class CreateTurnosTable extends Migration
     {
         Schema::create('turnos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('fecha') ;
-            $table->time('hora') ;
-            $table->unsignedBigInteger('user_id') ;
-            $table->foreign('user_id')->references('id')->on('users') ;
-            $table->unsignedBigInteger('horario_id') ;
-            $table->foreign('horario_id')->references('id')->on('horarios') ;
-            $table->unsignedBigInteger('servicio_id') ;
-            $table->foreign('servicio_id')->references('id')->on('servicios') ;
+            $table->date('fecha');
+            $table->time('hora');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('horario_id');
+            $table->foreign('horario_id')->references('id')->on('horarios');
+            $table->unsignedBigInteger('servicio_id');
+            $table->foreign('servicio_id')->references('id')->on('servicios');
             $table->timestamps();
         });
     }

@@ -13,11 +13,11 @@ class DiasSeeder extends Seeder
     public function run()
     {
         Dia::create([
-            'id'  => 1 ,
+            'id'  => 1,
             'dia' => 'Lunes'
         ]);
         Dia::create([
-            'id'  => 2 ,
+            'id'  => 2,
             'dia' => 'Martes'
         ]);
         Dia::create([
