@@ -61,7 +61,6 @@
 
             var url = "{{ route('turnos.obtener') }}" ;
           
-            
             //AJAX
             $.get(url ,{fecha: pickerValor.val(),servicio: $('#servicio').val()} ,function(data){
                 console.log(data);
