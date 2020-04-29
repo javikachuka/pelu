@@ -1,4 +1,5 @@
-@include('raiz')
+@extends('raiz')
+@section('content')
 <div class="card">
     <div class="card-header">
         <div class="row">
@@ -23,6 +24,7 @@
                 </tr>
             </thead>
             <tbody>
+                @if (!$horarios->isEmpty())
                 @foreach ($horarios as $horario)
                 <tr>
                     <th>{{$horario->nombre}}</th>
@@ -33,9 +35,17 @@
                     </th>
                     <th>{{$horario->comienzo}}</th>
                     <td>{{$horario->fin}}</td>
+                    <td class="d-flex justify-content-center ">
+                        <a class="p-1 text-primary"><i class="fal fa-edit"></i></a>
+                        <a class="p-1 text-danger"><i class="fal fa-trash-alt"></i></a>
+                    </td>
                 </tr>
                 @endforeach
+                @else
+                    <td class="text-muted">No hay horarios registrados...</td>
+                @endif
             </tbody>
         </table>
     </div>
 </div>
+@endsection

@@ -1,5 +1,6 @@
-@include('raiz')
+@extends('raiz')
 
+@section('content')
 <div class="card">
     <div class="card-header">
         <h3>Creacion de servicios</h3>
@@ -18,12 +19,17 @@
             </div>
             <div class="form-group">
                 <label for="duracion">Duracion del servicio (Minutos)</label>
-                <input type="number" class="form-control" id="duracion" name="duracion" value="{{ old('duracion') }}"
+                <input type="number" class="form-control" id="duracion" name="duracion" min="15" max="300" value="{{ old('duracion') }}"
                     required>
             </div>
         </div>
-        <button type="submit" class="btn btn-secondary">Crear</button>
+
+        <div class="float-right mr-4">
+            <a href="javascript:history.back()" class="btn btn-danger btn-sm">Cancelar</a>
+            <button type="submit" class="btn btn-secondary btn-sm">Crear</button>
+        </div>
         @csrf
     </form>
 
 </div>
+@endsection

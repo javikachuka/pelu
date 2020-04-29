@@ -22,13 +22,15 @@
                 <label for="apellido">Apellido</label>
                 <input type="text" class="form-control" id="apellido" name="apellido" required>
             </div>
-            <div class="form-group">
-                <label for="dni">DNI</label>
-                <input type="text" class="form-control" id="dni" name="dni" required>
-            </div>
-            <div class="form-group">
-                <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label for="dni">DNI</label>
+                    <input type="text" class="form-control" id="dni" name="dni" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                </div>
             </div>
             <div class="form-group">
                 <label>Email</label>
@@ -39,7 +41,10 @@
                 <input type="password" name="password" class="form-control" value="" required>
             </div>
         </div>
-        <button type="submit" class="btn btn-secondary">Crear</button>
+        <div class="float-right mr-4">
+            <a href="javascript:history.back()" class="btn btn-danger btn-sm">Cancelar</a>
+            <button type="submit" class="btn btn-secondary btn-sm">Crear</button>
+        </div>
         @csrf
     </form>
 

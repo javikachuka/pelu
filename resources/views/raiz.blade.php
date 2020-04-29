@@ -14,8 +14,10 @@
 
 <body>
     @include('navbar')
-    <div class="content">
-        @yield('content')
+    <div class="content mt-3">
+        <div class="container">
+            @yield('content')
+        </div>
     </div>
     <script src="{{asset('js/app.js')}}"></script>
     <script src="{{asset('js/bootstrap-datepicker.min.js')}}"></script>

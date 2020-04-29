@@ -1,4 +1,6 @@
-@include('raiz')
+@extends('raiz')
+
+@section('content')
 <div class="card">
     <div class="card-header">
         <div class="row">
@@ -18,17 +20,27 @@
                     <th>#</th>
                     <th>Servicio</th>
                     <th>Duracion (Minutos)</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
+                @if (!$servicios->isEmpty())
                 @foreach ($servicios as $servicio)
                 <tr>
-                    <th>{{$servicio->id}}</th>
-                    <th>{{$servicio->servicio}}</th>
-                    <th>{{$servicio->duracion}}</th>
+                    <td>{{$servicio->id}}</td>
+                    <td>{{$servicio->servicio}}</td>
+                    <td>{{$servicio->duracion}}</td>
+                    <td class="d-flex justify-content-center ">
+                        <a class="p-1 text-primary"><i class="fal fa-edit"></i></a>
+                        <a class="p-1 text-danger"><i class="fal fa-trash-alt"></i></a>
+                    </td>
                 </tr>
                 @endforeach
+                @else
+                <td class="text-muted">No hay servicios registrados...</td>
+                @endif
             </tbody>
         </table>
     </div>
 </div>
+@endsection
