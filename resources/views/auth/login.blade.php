@@ -38,6 +38,14 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group row">
+
+                            <div class="offset-4 col-md-6">
+                                <p href="">Eres nuevo?
+                                    <a href="{{ route('register') }}">Registrate aqui</a>
+                                </p>
+                            </div>
+                        </div>
 
 
                         <div class="form-group row mb-0">
