@@ -3,9 +3,15 @@
 
 <div class="card">
     <div class="card-header">
-        <h3>Clientes Registrados</h3>
-        <button type="button" class="btn btn-sm btn-secondary"
-            onclick="location.href='{{ route('users.create')}}'"><i class="fas fa-plus"></i></button>
+        <div class="row">
+            <div class="col-md-auto">
+                <h3>Clientes Registrados</h3>
+            </div>
+            <div class="col-md-auto">
+                <button type="button" class="btn btn-sm btn-secondary"
+                    onclick="location.href='{{ route('users.create')}}'"><i class="fas fa-plus"></i></button>
+            </div>
+        </div>
     </div>
     <div class="card-body">
         <table class="table">
