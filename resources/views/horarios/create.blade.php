@@ -16,13 +16,15 @@
             <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}"placeholder="Por ej. Horario Nocturno" required>
         </div>
         <label for="">Dias Semanales</label>
-        <div class="row">
-            @foreach ($dias as $dia)
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" value="{{$dia->id}}" name="dias[]" id="dia+{{$dia->id}}" @if(is_array(old('dias')) && in_array($dia->id, old('dias'))) checked @endif>
-                <label class="custom-control-label" for="dia+{{$dia->id}}">{{$dia->dia}}</label>
+        <div class="form-group">
+            <div class="form-check-inline">
+                @foreach ($dias as $dia)
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" value="{{$dia->id}}" name="dias[]" id="dia+{{$dia->id}}" @if(is_array(old('dias')) && in_array($dia->id, old('dias'))) checked @endif>
+                    <label class="custom-control-label pr-4" for="dia+{{$dia->id}}">{{$dia->dia}}</label>
+                </div>
+                @endforeach
             </div>
-            @endforeach
         </div>
         <div class="form-group">
             <label for="horaComienzo">Hora de Comienzo</label>
