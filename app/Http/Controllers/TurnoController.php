@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Dia;
 use App\Horario;
 use App\Servicio;
 use App\Turno;
@@ -13,7 +14,7 @@ class TurnoController extends Controller
     public function create()
     {
         $servicios = Servicio::all();
-        return view('turnos.create', compact('servicios'));
+        return view('turnos.createJavi', compact('servicios'));
     }
 
     public function get(Request $request)
@@ -62,5 +63,36 @@ class TurnoController extends Controller
         $horarios = Horario::all();
 
         return $horarios;
+    }
+
+
+
+
+    public function getIntervalos(Request $request){
+        // return $request ;
+        $this->validacionCamposTurno($request);
+
+        $turnos = Turno::where('fecha' , $request->fecha)->get() ;
+
+        if($turnos->isEmpty()){
+            $f = Carbon::createFromFormat('d/m/Y',$request->fecha) ;
+            $dia = Dia::find($f->dayOfWeek);
+            foreach($dia->horarios as $h){
+                $intervalo = collect() ;
+                return $minutos = Carbon::now()->setTimeFrom($h->comienzo)->diffInMinutes() ;
+
+            }
+        }
+        // return redirect()->route('turnos.createJavi');
+    }
+
+    private function validacionCamposTurno(Request $request)
+    {
+        $rules = [
+            'servicio'    => 'required',
+            'fecha'      => 'required'
+        ];
+
+        $this->validate($request, $rules);
     }
 }

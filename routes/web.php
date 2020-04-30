@@ -36,4 +36,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('turnos/create', 'TurnoController@create')->name('turnos.create');
     Route::get('turnos/obtener', 'TurnoController@get')->name('turnos.obtener');
+
+
+    Route::post('turnos/obt', 'TurnoController@getIntervalos')->name('turnos.obtenerIntervalo');
+
 });
