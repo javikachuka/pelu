@@ -8,12 +8,17 @@ use App\Servicio;
 use App\Turno;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
+define("MINUTOS_ESPACIOS",    10);
 class TurnoController extends Controller
 {
-    public function index(){
-        $turnos = Turno::all() ;
-        return view('turnos.index', compact('turnos')) ;
+
+
+    public function index()
+    {
+        $turnos = Turno::all();
+        return view('turnos.index', compact('turnos'));
     }
 
 
@@ -23,36 +28,26 @@ class TurnoController extends Controller
         return view('turnos.createJavi', compact('servicios'));
     }
 
-    public function save(Request $request){
-        $turno = new Turno ;
-        $f = Carbon::createFromFormat('d/m/Y' , $request->fecha) ;
-        $turno->fecha = $f ;
-        $turno->hora = $request->horario ;
-        $turno->finalizado = false ;
-        $turno->user_id = auth()->user()->id  ;
-        $turno->servicio_id = $request->servicio  ;
-        $turno->horario_id = 2  ;
+    public function save(Request $request)
+    {
+        $turno = new Turno;
+        $f = Carbon::createFromFormat('d/m/Y', $request->fecha);
+        $turno->fecha = $f;
+        $turno->hora = $request->horario;
+        $turno->finalizado = false;
+        $turno->user_id = auth()->user()->id;
+        $turno->servicio_id = $request->servicio;
+        $turno->horario_id = 2;
 
-        $turno->save() ;
+        $turno->save();
 
-        return redirect()->route('turnos.index') ;
-
-
+        return redirect()->route('turnos.index');
     }
 
     public function getIntervalos(Request $request)
     {
 
         $newDate = $this->cambiarFormatoFecha($request->fecha);
-
-        $turnosMismaFecha = Turno::where('fecha', $newDate)->where('finalizado', false)->get();
-        //verificamos si hay turnos el mismo dia
-        $horaentrada = "08:00";
-
-        $horasalida = "09:00";
-
-        // return $diferenciahora = date("H:i:s", strtotime("00:00:00") + strtotime($horasalida) - strtotime($horaentrada));
-
 
         $fechaSeleccionada =  date($newDate);
         //se busca el servicio que selecciono el cliente
@@ -68,6 +63,13 @@ class TurnoController extends Controller
 
             return 'el dia seleccionado no tiene horario';
         }
+        $fechaDeHoy = date('Y-m-d');
+        //si la fecha seleccionada es hoy la variable de $esHoy es true
+        $esHoy = false;
+        if ($fechaDeHoy == $newDate) {
+            $esHoy = true;
+        }
+
         $horariosDisponibles = collect();
 
         foreach ($horariosLaboral as $key => $horario) {
@@ -78,12 +80,20 @@ class TurnoController extends Controller
             if (sizeof($turnosMismaFecha) > 0) {
                 $horaActual = $horario->comienzo;
                 $horaAnterior = $horaActual;
-                $guardarEspacios = collect();
-                $horaCero = date("H:i:s", strtotime("00:00:00"));
-                foreach ($turnosMismaFecha as  $turno) {
 
+                foreach ($turnosMismaFecha as  $turno) {
                     $horaActual = $turno->hora;
-                    $diferenciahora = date("H:i:s", strtotime("00:00:00") + strtotime($horaActual) - strtotime($horaAnterior));
+                    if ($esHoy) {
+                        if ($turno->hora >= date('H:i:s')) {
+                            $horaAnterior = date('H:i:s');
+                        } else {
+                            //La hora del turno ya paso asi que pasamos al otro turno
+                            $diferenciahora = date("H:i:s", strtotime("00:00:00"));
+                        }
+                    } else {
+
+                        $diferenciahora = date("H:i:s", strtotime("00:00:00") + strtotime($horaActual) - strtotime($horaAnterior));
+                    }
                     $minutos = intval($this->todoMinutos($diferenciahora));
 
                     if (($minutos) >= $servicio->duracion) {
@@ -91,6 +101,7 @@ class TurnoController extends Controller
                         $cantidadIntervalos = intval($minutos / $servicio->duracion);
                         //se agregan todos las horas disponibles en intervalos de la duracion del servicio
                         for ($i = 0; $i < $cantidadIntervalos; $i++) {
+
                             $horariosDisponibles->add($horaAnterior);
                             $horaAnterior = $this->sumarMinutos($horaAnterior, $servicio->duracion);
                         }
@@ -108,19 +119,39 @@ class TurnoController extends Controller
                     $cantidadIntervalos = intval($minutos / $servicio->duracion);
                     //se agregan todos las horas disponibles en intervalos de la duracion del servicio
                     for ($i = 0; $i < $cantidadIntervalos; $i++) {
-                        $horariosDisponibles->add($horaAnterior);
-                        $horaAnterior = $this->sumarMinutos($horaAnterior, $servicio->duracion);
+                        if ($esHoy) {
+                            $horaDeHoy = date('H:i:s');
+                            if ($horaAnterior >= $horaDeHoy) {
+                                $horariosDisponibles->add($horaAnterior);
+                            }
+                            $horaAnterior = $this->sumarMinutos($horaAnterior, $servicio->duracion);
+                        } else {
+                            $horariosDisponibles->add($horaAnterior);
+                            $horaAnterior = $this->sumarMinutos($horaAnterior, $servicio->duracion);
+                        }
                     }
                 }
                 // return $horariosDisponibles;
             } else {
                 //si no hay turnos simplemente separamos el horario por los intervalos del servicio.
+                if ($esHoy) {
+                    if (($horario->fin >= date('H:i:s'))) {
+                        $horaAnterior = date('H:i:s');
+                    } else {
+                        $horaAnterior = $horario->fin;
+                    }
+                } else {
+                    $horaAnterior = $horario->comienzo;
+                }
 
-                $diferenciahora = date("H:i:s", strtotime("00:00:00") + strtotime($horario->fin) - strtotime($horario->comienzo));
+
+                $diferenciahora = date("H:i:s", strtotime("00:00:00") + strtotime($horario->fin) - strtotime($horaAnterior));
                 $minutos = intval($this->todoMinutos($diferenciahora));
+
                 $cantidadIntervalos = intval($minutos / $servicio->duracion);
-                $horaAnterior = $horario->comienzo;
+
                 for ($i = 0; $i < $cantidadIntervalos; $i++) {
+
                     $horariosDisponibles->add($horaAnterior);
                     $horaAnterior = $this->sumarMinutos($horaAnterior, $servicio->duracion);
                 }
@@ -148,18 +179,17 @@ class TurnoController extends Controller
         $minutos = intval($fch[1]) + (intval($fch[0]) * 60);
         return $minutos;
     }
-    public function sumarMinutos($hora, $minutos)
+    public function sumarMinutos($hora, int $minutos)
     {
         $fch = explode(":", $hora);
-        $minutosTotal = $fch[1] + $minutos;
-        $horasFaltante = ($minutosTotal / 60);
-        $horasTotal = intval($fch[0]) + intval($horasFaltante);
+        $minutosTotal = intval($fch[1]) + $minutos;
+        $horasFaltante = intval($minutosTotal / 60);
+        $horasTotal = intval($fch[0]) + ($horasFaltante);
 
-        $minutoFinal = explode(".", bcdiv($horasFaltante, '1', 2));;
-        $minutoFinal = $minutoFinal[1];
+        $minutoFinal = $minutosTotal - ($horasFaltante * 60);
 
-        if ($minutosTotal < 10) {
-            $minutosTotal = '0' . $minutosTotal;
+        if ($minutoFinal < 10) {
+            $minutoFinal = '0' . $minutoFinal;
         }
         if ($horasTotal < 10) {
             $horasTotal = '0' . $horasTotal;
@@ -172,24 +202,24 @@ class TurnoController extends Controller
     {
         // return $request ;
         $this->validacionCamposTurno($request);
-        $turnos = Turno::where('fecha' , $request->fecha)->get() ;
-        $servicio = Servicio::find($request->servicio) ;
+        $turnos = Turno::where('fecha', $request->fecha)->get();
+        $servicio = Servicio::find($request->servicio);
 
         if ($turnos->isEmpty()) {
             $f = Carbon::createFromFormat('d/m/Y', $request->fecha);
             $dia = Dia::find($f->dayOfWeek);
-            $intervalo = collect() ;
-            $aumento = $servicio->duracion ;
-            foreach($dia->horarios as $h){
-                $minutosComienzo = (Carbon::now()->setTimeFrom($h->comienzo)->hour)*60 ;
-                $minutosComienzo += Carbon::now()->setTimeFrom($h->comienzo)->minute ;
-                $minutosFin = (Carbon::now()->setTimeFrom($h->fin)->hour)*60 ;
-                $minutosFin += Carbon::now()->setTimeFrom($h->fin)->minute ;
-                for ($minutosComienzo; $minutosComienzo < $minutosFin ;  $minutosComienzo += $aumento ) {
+            $intervalo = collect();
+            $aumento = $servicio->duracion;
+            foreach ($dia->horarios as $h) {
+                $minutosComienzo = (Carbon::now()->setTimeFrom($h->comienzo)->hour) * 60;
+                $minutosComienzo += Carbon::now()->setTimeFrom($h->comienzo)->minute;
+                $minutosFin = (Carbon::now()->setTimeFrom($h->fin)->hour) * 60;
+                $minutosFin += Carbon::now()->setTimeFrom($h->fin)->minute;
+                for ($minutosComienzo; $minutosComienzo < $minutosFin; $minutosComienzo += $aumento) {
                     $intervalo->add($this->hoursandmins($minutosComienzo));
                 }
             }
-            return $intervalo ;
+            return $intervalo;
         }
         // return redirect()->route('turnos.createJavi');
     }
