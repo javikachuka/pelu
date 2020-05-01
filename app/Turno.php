@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Turno extends Model
@@ -20,5 +21,10 @@ class Turno extends Model
     public function horario()
     {
         return $this->belongsTo(Horario::class);
+    }
+
+    public function getFecha(){
+        $f = Carbon::create($this->fecha) ;
+        return $f->isoFormat('dddd, D MMM YYYY');
     }
 }

@@ -28,7 +28,7 @@
                 @foreach ($turnos as $turno)
                 <tr>
                     <th>{{$turno->id}}</th>
-                    <th>{{$turno->fecha}}</th>
+                    <th>{{$turno->getFecha()}}</th>
                     <th>{{$turno->hora}}</th>
                     <td>{{$turno->usuario->name}}</td>
                     <td>{{$turno->servicio->servicio}}</td>
