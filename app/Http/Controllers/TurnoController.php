@@ -149,18 +149,36 @@ class TurnoController extends Controller
     {
         // return $request ;
         $this->validacionCamposTurno($request);
-
-        $turnos = Turno::where('fecha', $request->fecha)->get();
+        $turnos = Turno::where('fecha' , $request->fecha)->get() ;
+        $servicio = Servicio::find($request->servicio) ;
 
         if ($turnos->isEmpty()) {
             $f = Carbon::createFromFormat('d/m/Y', $request->fecha);
             $dia = Dia::find($f->dayOfWeek);
-            foreach ($dia->horarios as $h) {
-                $intervalo = collect();
-                return $minutos = Carbon::now()->setTimeFrom($h->comienzo)->diffInMinutes();
+            $intervalo = collect() ;
+            $aumento = $servicio->duracion ;
+            foreach($dia->horarios as $h){
+                $minutosComienzo = (Carbon::now()->setTimeFrom($h->comienzo)->hour)*60 ;
+                $minutosComienzo += Carbon::now()->setTimeFrom($h->comienzo)->minute ;
+                $minutosFin = (Carbon::now()->setTimeFrom($h->fin)->hour)*60 ;
+                $minutosFin += Carbon::now()->setTimeFrom($h->fin)->minute ;
+                for ($minutosComienzo; $minutosComienzo < $minutosFin ;  $minutosComienzo += $aumento ) {
+                    $intervalo->add($this->hoursandmins($minutosComienzo));
+                }
             }
+            return $intervalo ;
         }
         // return redirect()->route('turnos.createJavi');
+    }
+
+    private function hoursandmins($time, $format = '%02d:%02d')
+    {
+        if ($time < 1) {
+            return;
+        }
+        $hours = floor($time / 60);
+        $minutes = ($time % 60);
+        return sprintf($format, $hours, $minutes);
     }
 
     private function validacionCamposTurno(Request $request)
