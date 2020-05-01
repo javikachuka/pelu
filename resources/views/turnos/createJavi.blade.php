@@ -11,40 +11,45 @@
     </div>
     @include('messageError')
 
-    <form class="form-group " method="POST" action="{{route("turnos.obtenerIntervalo")}}">
+    <form class="form-group " method="POST" action="{{route("turnos.save")}}">
         <div class="card-body">
-            <div class="row">
-
-                <div class="col">
-                    <label for="datepicker">Dia del Turno</label>
-                    <div id="datepicker" data-date="12/03/2012"></div>
-                    <input type="hidden" id="my_hidden_input" name="fecha" required>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="">Servicio</label>
+                            <select class="form-control" name="servicio" id="servicio" required>
+                                <option value="" selected disabled>--Seleccione--</option>
+                                @foreach ($servicios as $servicio)
+                                <option value="{{$servicio->id}}">{{$servicio->servicio}}</option>
+                                @endforeach
+                            </select>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="info" class="mt-5">
+                        </div>
+                    </div>
                 </div>
-
             </div>
-            <div class="row">
-                <div class="col">
-                    <label for="">Servicio</label>
-                    <select class="form-control" name="servicio" id="servicio" required>
-                        <option value="" selected disabled>--Seleccione--</option>
-                        @foreach ($servicios as $servicio)
-                        <option value="{{$servicio->id}}">{{$servicio->servicio}}</option>
-                        @endforeach
-                    </select>
-
+            <div class="form-group">
+                <div class="row pt-3">
+                    <div class="col-md-5">
+                        <label for="datepicker">Dia del Turno</label>
+                        <div id="datepicker" data-date="12/03/2012"></div>
+                        <input type="hidden" id="my_hidden_input" name="fecha" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="">Horario</label>
+                        <select class="form-control" name="horario" id="horario" required>
+                            <option value="" selected disabled>--Seleccione--</option>
+                        </select>
+                    </div>
                 </div>
-                {{-- <div class="col">
-                    <label for="">Horario</label>
-                    <select class="form-control" name="horario" id="horario" required>
-                        <option value="" selected disabled>--Seleccione--</option>
-                    </select>
-                </div> --}}
             </div>
 
         </div>
         <div class="float-right mr-4">
             <a href="javascript:history.back()" class="btn btn-danger btn-sm">Cancelar</a>
-            <button type="submit" class="btn btn-secondary btn-sm">Ver horarios disponibles</button>
+            <button type="submit" class="btn btn-secondary btn-sm">Reservar Turno</button>
         </div>
         @csrf
     </form>
@@ -62,21 +67,33 @@
             $('#datepicker').datepicker('getFormattedDate')
         );
 
-            /*var url = "{{ route('turnos.obtener') }}" ; */
+            var url = "{{ route('turnos.obtenerIntervalo') }}" ;
 
             //AJAX
-            /*
             $.get(url ,{fecha: pickerValor.val(),servicio: $('#servicio').val()} ,function(data){
                 console.log(data);
                 var html_select = '<option value="" selected disabled>--Seleccione--</option>' ;
                 var html_select ;
                 for (var i = 0; i < data.length; i++) {
-                    html_select += '<option value="'+data[i].id+'">'+data[i].nombre+'</option>' ;
+                    html_select += '<option value="'+data[i]+'">'+data[i]+'</option>' ;
                 }
                 $('#horario').html(html_select);
             });
-            */
+
     });
+
+    $('#servicio').change(function(){
+        var id_ser = $(this).val() ;
+        var url = "{{ route('servicios.getDuracion' , ':id') }}" ;
+        url = url.replace(':id' , id_ser) ;
+        var html = '';
+        //AJAX
+        $.get(url ,function(data){
+            html += '<p> El servicio dura apox. '+data+' min.</p>' ;
+            $('#info').html(html);
+        });
+
+    }) ;
 </script>
 
 @endpush

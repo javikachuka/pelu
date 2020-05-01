@@ -28,6 +28,11 @@ class ServicioController extends Controller
         return redirect()->route('servicios.index');
     }
 
+    public function getDuracion($id){
+        $servicio = Servicio::find($id) ;
+        return $servicio->duracion ;
+    }
+
     public function validacionCamposServicio(Request $request)
     {
         $rules = [

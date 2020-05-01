@@ -11,10 +11,33 @@ use Illuminate\Http\Request;
 
 class TurnoController extends Controller
 {
+    public function index(){
+        $turnos = Turno::all() ;
+        return view('turnos.index', compact('turnos')) ;
+    }
+
+
     public function create()
     {
         $servicios = Servicio::all();
         return view('turnos.createJavi', compact('servicios'));
+    }
+
+    public function save(Request $request){
+        $turno = new Turno ;
+        $f = Carbon::createFromFormat('d/m/Y' , $request->fecha) ;
+        $turno->fecha = $f ;
+        $turno->hora = $request->horario ;
+        $turno->finalizado = false ;
+        $turno->user_id = auth()->user()->id  ;
+        $turno->servicio_id = $request->servicio  ;
+        $turno->horario_id = 2  ;
+
+        $turno->save() ;
+
+        return redirect()->route('turnos.index') ;
+
+
     }
 
     public function getIntervalos(Request $request)

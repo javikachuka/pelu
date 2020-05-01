@@ -28,16 +28,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('servicios', 'ServicioController@index')->name('servicios.index');
     Route::get('servicios/create', 'ServicioController@create')->name('servicios.create');
     Route::post('servicios', 'ServicioController@save')->name('servicios.save');
+    Route::get('servicios/duracion/{id}', 'ServicioController@getDuracion')->name('servicios.getDuracion');
 
 
     Route::get('users', 'UserController@index')->name('users.index');
     Route::get('users/create', 'UserController@create')->name('users.create');
     Route::post('users', 'UserController@save')->name('users.save');
 
+
+    Route::get('turnos', 'TurnoController@index')->name('turnos.index');
     Route::get('turnos/create', 'TurnoController@create')->name('turnos.create');
     Route::get('turnos/obtener', 'TurnoController@get')->name('turnos.obtener');
-
-
-    Route::post('turnos/obt', 'TurnoController@getIntervalos')->name('turnos.obtenerIntervalo');
+    Route::post('turnos', 'TurnoController@save')->name('turnos.save');
+    Route::get('turnos/obt', 'TurnoController@getIntervalos')->name('turnos.obtenerIntervalo');
 
 });

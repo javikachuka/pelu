@@ -7,7 +7,7 @@
       <div class="navbar-nav">
         <a class="nav-item nav-link " href="#">Home</a>
         <a class="nav-item nav-link" href=" {{ route('users.index') }} ">Clientes</a>
-        <a class="nav-item nav-link" href=" {{route('turnos.create')}} ">Turnos</a>
+        <a class="nav-item nav-link" href=" {{route('turnos.index')}} ">Turnos</a>
         <a class="nav-item nav-link" href="{{ route('horarios.index') }}">Horarios</a>
         <a class="nav-item nav-link" href="{{ route('servicios.index') }}">Servicios</a>
       </div>
