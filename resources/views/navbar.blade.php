@@ -5,7 +5,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link " href="#">Home</a>
+        <a class="nav-item nav-link " href="{{ route('home') }}">Home</a>
         <a class="nav-item nav-link" href=" {{ route('users.index') }} ">Clientes</a>
         <a class="nav-item nav-link" href=" {{route('turnos.index')}} ">Turnos</a>
         <a class="nav-item nav-link" href="{{ route('horarios.index') }}">Horarios</a>

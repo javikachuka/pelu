@@ -8,6 +8,7 @@ use App\Servicio;
 use App\Turno;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Date;
 
 define("MINUTOS_ESPACIOS",    10);
@@ -26,6 +27,19 @@ class TurnoController extends Controller
     {
         $servicios = Servicio::all();
         return view('turnos.createJavi', compact('servicios'));
+    }
+
+    public function saveFotos(Request $request){
+        if($request->hasFile('fotos')){
+            for ($i=0; $i < count($request->fotos); $i++) {
+                $f = $request->fotos[$i] ;
+                $name = $f->getClientOriginalName();
+                $img = Image::make($f)->resize(320, 240);
+                $img->save(public_path('/img/fotos/').$name) ;
+            }
+        }else{
+            return 0;
+        }
     }
 
     public function save(Request $request)

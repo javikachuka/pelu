@@ -8,22 +8,31 @@
             </div>
         </div>
     </div>
-    <div class="card-body">
-        <div class="form-group" id="fotitos">
-            <label for="">Foto del trabajo finalizado</label>
-            <div class="row justify-content-center">
-                <div id="preview0">
+    <form class="form-group " method="POST" enctype="multipart/form-data" action="{{route("turnos.saveFotos")}}">
+        <div class="card-body">
+            <div class="form-group" id="fotitos">
+                <label for="">Foto del trabajo finalizado</label>
+                <div class="row">
+                    <div class="col-md-4" id="otro0">
+                        <div id="preview0" class="rounded float-left">
+                        </div>
+                        <input class="custom-file" id="imagenTrabajo0" type="file" name="fotos[]" accept="image/*"
+                            capture="camera" style="" required />
+                    </div>
+                    <div class="btn-group-vertical">
+                        <button type="button" id="agregar" class="btn btn-secondary">Agregar <i class="fal fa-plus"></i></button>
+                    </div>
                 </div>
 
-                <input class="custom-file" id="imagenTrabajo0" type="file" name="fotoFin[]" accept="image/*"
-                    capture="camera" style="" required />
             </div>
-
+            <div class="form-group">
+            </div>
         </div>
-        <div class="form-group">
-            <button type="button" id="agregar" class="btn btn-secondary btn-lg btn-block">agregar otra</button>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-sm btn-success">Guardar</button>
         </div>
-    </div>
+    @csrf
+    </form>
 </div>
 @endsection
 
@@ -41,7 +50,8 @@
 
             // Le decimos que cuando este listo ejecute el código interno
             reader.onload = function(){
-                let preview = document.getElementById('preview'+indice),
+                let preview = document.getElementById('preview'+indice) ;
+                let otro = document.getElementById('otro') ;
                 image = document.createElement('img');
                 image.src = reader.result;
                 image.height='240';
@@ -55,10 +65,13 @@
         indice += 1 ;
         var html = '' ;
 
-        html = '<div id="preview'+indice+'">'+
+        html =  '<div class="col-md-4" id="otro'+indice+'">'+
+                '<div id="preview'+indice+'" class="rounded float-left">'+
                 '</div>'+
-               ' <input class="custom-file" id="imagenTrabajo'+indice+'" type="file" name="fotoFin" accept="image/*" capture="camera" style="" required />' ;
-        $('#fotitos').append(html) ;
+               ' <input class="custom-file" id="imagenTrabajo'+indice+'" type="file" name="fotos[]" accept="image/*" capture="camera" style="" required />'+
+               '</div>' ;
+        var aux = indice-1 ;
+        $('#otro'+aux+'').after(html) ;
 
         document.getElementById("imagenTrabajo"+indice).onchange = function(e) {
             // Creamos el objeto de la clase FileReader

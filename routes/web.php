@@ -42,5 +42,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('turnos', 'TurnoController@save')->name('turnos.save');
     Route::get('turnos/obt', 'TurnoController@getIntervalos')->name('turnos.obtenerIntervalo');
     Route::get('turnos/fotos', 'TurnoController@fotos')->name('turnos.fotos');
+    Route::post('turnos/fotos', 'TurnoController@saveFotos')->name('turnos.saveFotos');
 
 });
