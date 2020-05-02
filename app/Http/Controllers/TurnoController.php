@@ -32,15 +32,22 @@ class TurnoController extends Controller
     {
         $turno = new Turno;
         $f = Carbon::createFromFormat('d/m/Y', $request->fecha);
+
         $turno->fecha = $f;
         $turno->hora = $request->horario;
         $turno->finalizado = false;
         $turno->user_id = auth()->user()->id;
         $turno->servicio_id = $request->servicio;
-        $turno->horario_id = 2;
-
+        $dia = Dia::find($f->dayOfWeek) ;
+        foreach($dia->horarios as $h){ //este codigo sirve para poder asignar el turno a un horario
+            $comienzo = Carbon::now()->setTimeFrom($h->comienzo) ;
+            $fin = Carbon::now()->setTimeFrom($h->fin) ;
+            $hora = Carbon::now()->setTimeFrom($request->horario);
+            if($hora->between($comienzo,$fin)){
+                $turno->horario_id = $h->id;
+            }
+        }
         $turno->save();
-
         return redirect()->route('turnos.index');
     }
 
@@ -232,6 +239,10 @@ class TurnoController extends Controller
         $hours = floor($time / 60);
         $minutes = ($time % 60);
         return sprintf($format, $hours, $minutes);
+    }
+
+    public function fotos(){
+        return view('turnos.fotos') ;
     }
 
     private function validacionCamposTurno(Request $request)

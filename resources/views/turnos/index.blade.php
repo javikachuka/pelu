@@ -21,6 +21,8 @@
                     <th>Hora</th>
                     <th>Cliente</th>
                     <th>Servicio</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,6 +34,18 @@
                     <th>{{$turno->hora}}</th>
                     <td>{{$turno->usuario->name}}</td>
                     <td>{{$turno->servicio->servicio}}</td>
+                    <td>
+                        @if ($turno->finalizado)
+                        <span class="badge badge-success">Realizado</span>
+                        @else
+                        <span class="badge badge-danger">Pendiente</span>
+                        @endif
+                    </td>
+                    <td class="d-flex justify-content-center ">
+                        <a class="p-2 text-dark" href="{{route('turnos.fotos')}}"><i class="fal fa-camera-retro"></i></a>
+                        <a class="p-2 text-success"><i class="fal fa-fast-forward"></i></a>
+                        <a class="p-2 text-danger"><i class="fal fa-trash-alt"></i></a>
+                    </td>
                 </tr>
                 @endforeach
                 @else

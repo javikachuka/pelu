@@ -22,6 +22,10 @@ class Turno extends Model
     {
         return $this->belongsTo(Horario::class);
     }
+    public function fotos()
+    {
+        return $this->hasMany(Foto::class);
+    }
 
     public function getFecha(){
         $f = Carbon::create($this->fecha) ;
