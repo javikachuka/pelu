@@ -63,11 +63,11 @@
           
             //AJAX
             $.get(url ,{fecha: pickerValor.val(),servicio: $('#servicio').val()} ,function(data){
-                console.log(data);
+                console.log(data['horariosDisponibles']);
                 var html_select = '<option value="" selected disabled>--Seleccione--</option>' ;
                 var html_select ;
-                for (var i = 0; i < data.length; i++) {
-                    html_select += '<option value="'+data[i].id+'">'+data[i].nombre+'</option>' ;
+                for (var i = 0; i < data['horariosDisponibles'].length; i++) {
+                    html_select += '<option value="'+data['horariosDisponibles'][i].id+'">'+data['horariosDisponibles'][i].nombre+'</option>' ;
                 }
                 $('#horario').html(html_select);
         });

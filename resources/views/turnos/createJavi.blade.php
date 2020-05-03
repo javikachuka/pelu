@@ -17,12 +17,12 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label for="">Servicio</label>
-                            <select class="form-control" name="servicio" id="servicio" required>
-                                <option value="" selected disabled>--Seleccione--</option>
-                                @foreach ($servicios as $servicio)
-                                <option value="{{$servicio->id}}">{{$servicio->servicio}}</option>
-                                @endforeach
-                            </select>
+                        <select class="form-control" name="servicio" id="servicio" required>
+                            <option value="" selected disabled>--Seleccione--</option>
+                            @foreach ($servicios as $servicio)
+                            <option value="{{$servicio->id}}">{{$servicio->servicio}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col-md-4">
                         <div id="info" class="mt-5">
@@ -72,12 +72,17 @@
             //AJAX
             $.get(url ,{fecha: pickerValor.val(),servicio: $('#servicio').val()} ,function(data){
                 console.log(data);
+                if(data['disponible']){
+
                 var html_select = '<option value="" selected disabled>--Seleccione--</option>' ;
                 var html_select ;
-                for (var i = 0; i < data.length; i++) {
-                    html_select += '<option value="'+data[i]+'">'+data[i]+'</option>' ;
+                for (var i = 0; i < data['horariosDisponibles'].length; i++) {
+                    html_select += '<option value="'+data['horariosDisponibles'][i]+'">'+data['horariosDisponibles'][i]+'</option>' ;
                 }
                 $('#horario').html(html_select);
+                }else{
+                    alert('El dia seleccionado no se trabaja');
+                }
             });
 
     });
