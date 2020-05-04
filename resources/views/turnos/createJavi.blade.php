@@ -81,7 +81,10 @@
                 }
                 $('#horario').html(html_select);
                 }else{
+                    var html_select = '<option value="" selected disabled>--Seleccione--</option>' ;
+                    $('#horario').html(html_select);
                     alert('El dia seleccionado no se trabaja');
+
                 }
             });
 
