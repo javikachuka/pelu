@@ -64,15 +64,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
         <!-- /.content-wrapper -->
 
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-light">
-            <!-- Control sidebar content goes here -->
-            <div class="p-3">
-                <h5>Configuracion</h5>
-                <p>Contenido</p>
-            </div>
-        </aside>
-        <!-- /.control-sidebar -->
 
         @include('admin.footer')
 
