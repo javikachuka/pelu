@@ -1,4 +1,4 @@
-@extends('raiz')
+@extends('admin.index')
 
 
 @section('content')

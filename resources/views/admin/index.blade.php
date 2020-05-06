@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>AdminLTE 3 | Starter</title>
+    <title>Pelu</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('css/fontawesome/css/all.min.css') }}">
@@ -51,9 +51,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="content">
                 <div class="container-fluid">
 
-                    @section('content')
+                    @yield('content')
 
-                    @endsection
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content -->
@@ -78,11 +77,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- REQUIRED SCRIPTS -->
 
     <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
+    <script src="{{asset('admin-lte/plugins/jquery/jquery.min.js')}}"></script>
     <!-- Bootstrap 4 -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{asset('admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.min.js"></script>
+    <script src="{{asset('admin-lte/dist/js/adminlte.min.js')}}"></script>
 </body>
 
 </html>
