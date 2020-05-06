@@ -37,7 +37,14 @@
                     <td>{{$horario->fin}}</td>
                     <td class="d-flex justify-content-center ">
                         <a class="p-1 text-primary"><i class="fal fa-edit"></i></a>
-                        <a class="p-1 text-danger"><i class="fal fa-trash-alt"></i></a>
+                        <form id="form-borrar{{$horario->id}}" method="POST"
+                            action="{{route('horarios.delete' , $horario->id)}}"
+                            style="display: inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('Esta seguro que quiere borrar este horario?');" class="btn btn-link p-1 text-danger"><i
+                                class="fal fa-trash-alt"></i></button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach

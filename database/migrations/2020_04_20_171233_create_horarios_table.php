@@ -19,6 +19,7 @@ class CreateHorariosTable extends Migration
             $table->time('comienzo') ;
             $table->time('fin') ;
             $table->boolean('activo')->default(1) ;
+            $table->softDeletes() ;
             $table->timestamps();
         });
     }

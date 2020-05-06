@@ -81,43 +81,9 @@ class HorarioController extends Controller
         $this->validate($request, $rules , $messages);
     }
 
-    // private function validacionRangoHorario(Request $request){
-    //     $comienzo = Carbon::now()->setTimeFrom($request->comienzo) ;
-    //     $fin = Carbon::now()->setTimeFrom($request->fin) ;
-    //     if($comienzo->greaterThan($fin)){
-    //         return redirect()->back()->withErrors([
-    //             'comparacion' => 'La hora de comienzo debe ser menor a la hora de fin'
-    //         ]);
-    //     }
-    // }
-
-    // private function validacionHorarioExistente(Request $request){
-    //     $dias = $request->dias ;
-    //     return $dias ;
-    //     foreach ($dias as $dia ) {
-    //         $diaExistente = Dia::find($dia) ;
-    //         return $horarios = $diaExistente->horarios ;
-
-    //         if(!$horarios->isEmpty()){
-    //             foreach ($horarios as $horario) {
-    //                 $comienzo = Carbon::now()->setTimeFrom($request->comienzo) ;
-    //                 $fin = Carbon::now()->setTimeFrom($request->fin) ;
-    //                 $comienzoRegistrado = Carbon::now()->setTimeFrom($horario->comienzo) ;
-    //                 $finRegistrado = Carbon::now()->setTimeFrom($horario->fin) ;
-    //                 if($comienzo->between($comienzoRegistrado,$finRegistrado)){
-    //                     return redirect()->back()->withErrors([
-    //                         'existencia' => 'Uno de los dias marcados ya tiene registrado un horario de comienzo registrado en las hora seleccionada, ingrese un horario o dia diferente por favor'
-    //                     ]) ;
-
-    //                 }else{
-    //                     if($fin->between($comienzoRegistrado,$finRegistrado)){
-    //                         return redirect()->back()->withErrors([
-    //                             'existencia' => 'Uno de los dias marcados ya tiene registrado un horario de fin registrado en las hora seleccionada, ingrese un horario o dia diferente por favor'
-    //                         ]) ;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+    public function delete($id){
+        $horario = Horario::find($id) ;
+        $horario->delete() ;
+        return redirect()->route('horarios.index') ;
+    }
 }

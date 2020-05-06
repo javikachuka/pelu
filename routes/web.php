@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('horarios', 'HorarioController@index')->name('horarios.index');
     Route::get('horarios/create', 'HorarioController@create')->name('horarios.create');
     Route::post('horarios', 'HorarioController@save')->name('horarios.save');
+    Route::delete('horarios/{id}', 'HorarioController@delete')->name('horarios.delete');
 
     Route::get('servicios', 'ServicioController@index')->name('servicios.index');
     Route::get('servicios/create', 'ServicioController@create')->name('servicios.create');
