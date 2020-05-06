@@ -1,5 +1,5 @@
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside class="main-sidebar sidebar-light-orange elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
         <img src="{{asset('admin-lte/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo"
@@ -22,35 +22,35 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent nav-legacy " data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
        with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="{{route('home')}}" class="nav-link">
+                    <a href="{{route('home')}}" class="nav-link {{ (request()->is('home')) ? 'active' : '' }}">
                         <i class="fal fa-home nav-icon"></i>
                         <p>Home</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('turnos.index')}}" class="nav-link">
+                    <a href="{{route('turnos.index')}}" class="nav-link  {{ (request()->routeIs('turnos.*')) ? 'active' : '' }}">
                         <i class="fal fa-circle-notch nav-icon"></i>
                         <p>Turnos</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('users.index')}}" class="nav-link">
+                    <a href="{{route('users.index')}}" class="nav-link  {{ (request()->routeIs('users.*')) ? 'active' : '' }}">
                         <i class="fal fa-circle-notch nav-icon"></i>
                         <p>Clientes</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('servicios.index')}}" class="nav-link">
+                    <a href="{{route('servicios.index')}}" class="nav-link  {{ (request()->routeIs('servicios.*')) ? 'active' : '' }}">
                         <i class="fal fa-circle-notch nav-icon"></i>
                         <p>Servicios</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('horarios.index')}}" class="nav-link">
+                    <a href="{{route('horarios.index')}}" class="nav-link  {{ (request()->routeIs('horarios.*')) ? 'active' : '' }}">
                         <i class="fal fa-circle-notch nav-icon"></i>
                         <p>Horarios</p>
                     </a>

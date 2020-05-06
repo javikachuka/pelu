@@ -14,13 +14,13 @@
         </div>
     </div>
     <div class="card-body">
-        <table class="table">
+        <table class="table table-responsive table-bordered table-striped table-hover dataTable">
             <thead class="thead-dark">
                 <tr>
-                    <th>#</th>
-                    <th>Servicio</th>
-                    <th>Duracion (Minutos)</th>
-                    <th>Acciones</th>
+                    <th width="10%">#</th>
+                    <th width="25%">Servicio</th>
+                    <th width="20%">Duracion (Minutos)</th>
+                    <th width="10%">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,7 +29,7 @@
                 <tr>
                     <td>{{$servicio->id}}</td>
                     <td>{{$servicio->servicio}}</td>
-                    <td>{{$servicio->duracion}}</td>
+                    <td>{{$servicio->duracion}} minutos</td>
                     <td class="d-flex justify-content-center ">
                         <a class="p-1 text-primary"><i class="fal fa-edit"></i></a>
                         <a class="p-1 text-danger"><i class="fal fa-trash-alt"></i></a>

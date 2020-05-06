@@ -14,25 +14,25 @@
         </div>
     </div>
     <div class="card-body">
-        <table class="table">
+        <table class="table table-responsive table-bordered table-striped table-hover dataTable">
             <thead class="thead-dark">
                 <tr>
-                    <th>#</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>DNI</th>
-                    <th>Fecha de Nacimiento</th>
-                    <th>Edad</th>
-                    <th>Acciones</th>
+                    <th width="5%">#</th>
+                    <th width="10%">Nombre</th>
+                    <th width="10%">Apellido</th>
+                    <th width="10%">DNI</th>
+                    <th width="15%">Fecha de Nacimiento</th>
+                    <th width="10%">Edad</th>
+                    <th width="10%">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($users as $user)
                 <tr>
-                    <th>{{$user->id}}</th>
-                    <th>{{$user->name}}</th>
-                    <th>{{$user->apellido}}</th>
-                    <th>{{$user->dni}}</th>
+                    <td>{{$user->id}}</td>
+                    <td>{{$user->name}}</td>
+                    <td>{{$user->apellido}}</td>
+                    <td>{{$user->dni}}</td>
                     <td>{{$user->getFecha()}}</td>
                     <td>{{$user->getEdad()}} años</td>
                     <td class="d-flex justify-content-center ">

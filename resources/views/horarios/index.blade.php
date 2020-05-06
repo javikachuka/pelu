@@ -13,14 +13,14 @@
         </div>
     </div>
     <div class="card-body">
-        <table class="table">
+        <table class="table table-responsive table-bordered table-striped table-hover dataTable">
             <thead class="thead-dark">
                 <tr>
-                    <th>Nombre</th>
-                    <th>Dias de Trabajo</th>
-                    <th>Hora de Comienzo</th>
-                    <th>Hora de Fin</th>
-                    <th>Acciones</th>
+                    <th width="15%">Nombre</th>
+                    <th width="15%">Dias de Trabajo</th>
+                    <th width="10%">Hora de Comienzo</th>
+                    <th width="10%">Hora de Fin</th>
+                    <th width="10%">Acciones</th>
                 </tr>
             </thead>
             <tbody>

@@ -18,6 +18,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href=" {{ asset('admin-lte/dist/css/adminlte.min.css') }}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    {{-- Datatable --}}
+    <link rel="stylesheet" href="{{ asset('admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    {{-- Bootstrap DatePicker --}}
+    <link rel="stylesheet" href=" {{asset('css/bootstrap-datepicker.min.css')}} ">
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -60,11 +65,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- /.content-wrapper -->
 
         <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
+        <aside class="control-sidebar control-sidebar-light">
             <!-- Control sidebar content goes here -->
             <div class="p-3">
-                <h5>Title</h5>
-                <p>Sidebar content</p>
+                <h5>Configuracion</h5>
+                <p>Contenido</p>
             </div>
         </aside>
         <!-- /.control-sidebar -->
@@ -75,13 +80,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
-
     <!-- jQuery -->
     <script src="{{asset('admin-lte/plugins/jquery/jquery.min.js')}}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{asset('admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('admin-lte/dist/js/adminlte.min.js')}}"></script>
+    {{-- Datatables --}}
+    <script src="{{asset('admin-lte/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+    {{-- Trasformador de Datatable --}}
+    <script src="{{asset('js/includeDataTable.js')}}"></script>
+    {{-- Bootstrap Datepicker --}}
+    <script src="{{asset('js/bootstrap-datepicker.min.js')}}"></script>
+    {{-- Cambiar Idioma DatePicker --}}
+    <script src="{{asset('js/idioma_datepicker.js')}}"></script>
+    @stack('scripts')
 </body>
 
 </html>

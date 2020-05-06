@@ -13,25 +13,25 @@
         </div>
     </div>
     <div class="card-body">
-        <table class="table">
+        <table id="turnos" class="table table-responsive table-bordered table-striped table-hover dataTable">
             <thead class="thead-dark">
                 <tr>
-                    <th>#</th>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>Cliente</th>
-                    <th>Servicio</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
+                    <th width="5%">#</th>
+                    <th width="20%">Fecha</th>
+                    <th width="10%">Hora</th>
+                    <th width="25%">Cliente</th>
+                    <th width="22%">Servicio</th>
+                    <th width="8%">Estado</th>
+                    <th width="10%">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @if (!$turnos->isEmpty())
                 @foreach ($turnos as $turno)
                 <tr>
-                    <th>{{$turno->id}}</th>
-                    <th>{{$turno->getFecha()}}</th>
-                    <th>{{$turno->hora}}</th>
+                    <td>{{$turno->id}}</td>
+                    <td>{{$turno->getFecha()}}</td>
+                    <td>{{$turno->hora}}</td>
                     <td>{{$turno->usuario->name}}</td>
                     <td>{{$turno->servicio->servicio}}</td>
                     <td>
@@ -42,14 +42,15 @@
                         @endif
                     </td>
                     <td class="d-flex justify-content-center ">
-                        <a class="p-2 text-dark" href="{{route('turnos.fotos')}}"><i class="fal fa-camera-retro"></i></a>
+                        <a class="p-2 text-dark" href="{{route('turnos.fotos')}}"><i
+                                class="fal fa-camera-retro"></i></a>
                         <a class="p-2 text-success"><i class="fal fa-fast-forward"></i></a>
                         <a class="p-2 text-danger"><i class="fal fa-trash-alt"></i></a>
                     </td>
                 </tr>
                 @endforeach
                 @else
-                    <td class="text-muted">No hay turnos registrados...</td>
+                <td class="text-muted">No hay turnos registrados...</td>
                 @endif
             </tbody>
         </table>
