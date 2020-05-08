@@ -28,9 +28,10 @@ class ServicioController extends Controller
         return redirect()->route('servicios.index');
     }
 
-    public function getDuracion($id){
-        $servicio = Servicio::find($id) ;
-        return $servicio->duracion ;
+    public function getDuracion($id)
+    {
+        $servicio = Servicio::find($id);
+        return $servicio->duracion;
     }
 
     public function validacionCamposServicio(Request $request)
@@ -42,5 +43,24 @@ class ServicioController extends Controller
 
 
         $this->validate($request, $rules);
+    }
+
+    public function delete(Request $request, $id)
+    {
+
+        $usuarioSesion = auth()->user();
+        $servicio = Servicio::find($id);
+
+        if (is_null($servicio)) {
+            return redirect()->back()->withErrors('No existe el servicio');
+        }
+
+        if (sizeof($servicio->turnosEnEspera()) > 0) {
+            return redirect()->back()->withErrors('No se puede borrar los servicios que tienen turnos asignados');
+        }
+        if ($servicio->delete()) {
+            return redirect()->back()->with('warning', 'Se borro el servicio con exito');
+        }
+        return redirect()->back()->withErrors('No se pudo eliminar el servicio');
     }
 }

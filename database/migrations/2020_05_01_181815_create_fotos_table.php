@@ -17,6 +17,7 @@ class CreateFotosTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('turno_id');
             $table->foreign('turno_id')->references('id')->on('turnos');
+            $table->softDeletes() ;
             $table->timestamps();
         });
     }

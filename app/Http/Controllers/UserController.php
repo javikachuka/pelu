@@ -57,4 +57,27 @@ class UserController extends Controller
 
         $this->validate($request, $rules, $mensaje);
     }
+    
+    public function delete(Request $request, $id)
+    {
+
+        $usuarioSesion = auth()->user();
+        $user = User::find($id);
+
+        if (is_null($user)) {
+            return redirect()->back()->withErrors('No existe el usuario');
+        }
+        // if ($usuarioSesion->empresa->id != $user->empresa->id) {
+
+        //     return redirect()->back()->withErrors('No se puede eliminar');
+        // }
+        if ($user->admin) {
+            return redirect()->back()->withErrors('El usuario no puede ser borrado');
+        }
+
+        if ($user->delete()) {
+            return redirect()->back()->with('warning', 'Se borro el usuario con exito');
+        }
+        return redirect()->back()->withErrors('No se pudo eliminar el usuario');
+    }
 }

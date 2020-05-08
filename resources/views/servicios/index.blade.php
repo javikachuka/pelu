@@ -1,6 +1,8 @@
 @extends('admin/index')
 
+
 @section('content')
+@include('messageError')
 <div class="card">
     <div class="card-header">
         <div class="row">
@@ -32,7 +34,8 @@
                     <td>{{$servicio->duracion}} minutos</td>
                     <td class="d-flex justify-content-center ">
                         <a class="p-1 text-primary"><i class="fal fa-edit"></i></a>
-                        <a class="p-1 text-danger"><i class="fal fa-trash-alt"></i></a>
+                        <a class="p-1 text-danger delete" val-servicio="{{$servicio->id}}"><i
+                                class="fal fa-trash-alt"></i></a>
                     </td>
                 </tr>
                 @endforeach
@@ -44,3 +47,21 @@
     </div>
 </div>
 @endsection
+@include('modals.confirmDelete')
+
+@push('scripts')
+<script>
+    $(document).on('click', '.delete', function(){
+    id = $(this).attr('val-servicio');
+    url2="{{route('servicios.delete',":id")}}";
+    url2=url2.replace(':id',id);
+
+    $('#formDelete').attr('action',url2);
+    $('#confirmDelete').modal('show');
+    });
+    
+    $('#formDelete').on('submit',function(){
+    $('#ok_delete').text('Eliminando...')
+    });
+</script>
+@endpush

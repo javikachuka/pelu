@@ -30,11 +30,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('servicios/create', 'ServicioController@create')->name('servicios.create');
     Route::post('servicios', 'ServicioController@save')->name('servicios.save');
     Route::get('servicios/duracion/{id}', 'ServicioController@getDuracion')->name('servicios.getDuracion');
+    Route::delete('servicios/delete/{id}', 'ServicioController@delete')->name('servicios.delete');
 
 
-    Route::get('users', 'UserController@index')->name('users.index');
-    Route::get('users/create', 'UserController@create')->name('users.create');
-    Route::post('users', 'UserController@save')->name('users.save');
+    Route::get('usuarios', 'UserController@index')->name('users.index');
+    Route::get('usuarios/create', 'UserController@create')->name('users.create');
+    Route::delete('usuarios/delete/{id}', 'UserController@delete')->name('users.delete');
+    Route::post('usuarios', 'UserController@save')->name('users.save');
 
 
     Route::get('turnos', 'TurnoController@index')->name('turnos.index');
@@ -44,5 +46,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('turnos/obt', 'TurnoController@getIntervalos')->name('turnos.obtenerIntervalo');
     Route::get('turnos/fotos', 'TurnoController@fotos')->name('turnos.fotos');
     Route::post('turnos/fotos', 'TurnoController@saveFotos')->name('turnos.saveFotos');
-
 });

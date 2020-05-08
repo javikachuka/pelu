@@ -16,6 +16,7 @@ class CreateDiasTable extends Migration
         Schema::create('dias', function (Blueprint $table) {
             $table->bigInteger('id')->unique();
             $table->string('dia');
+            $table->softDeletes() ;
             $table->timestamps();
         });
     }

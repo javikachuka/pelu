@@ -22,7 +22,8 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent nav-legacy " data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent nav-legacy " data-widget="treeview"
+                role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
        with font-awesome or any other icon font library -->
                 <li class="nav-item">
@@ -32,29 +33,34 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('turnos.index')}}" class="nav-link  {{ (request()->routeIs('turnos.*')) ? 'active' : '' }}">
+                    <a href="{{route('turnos.index')}}"
+                        class="nav-link  {{ (request()->routeIs('turnos.*')) ? 'active' : '' }}">
                         <i class="fal fa-circle-notch nav-icon"></i>
                         <p>Turnos</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('users.index')}}" class="nav-link  {{ (request()->routeIs('users.*')) ? 'active' : '' }}">
+                    <a href="{{route('users.index')}}"
+                        class="nav-link  {{ (request()->routeIs('users.*')) ? 'active' : '' }}">
                         <i class="fal fa-circle-notch nav-icon"></i>
-                        <p>Clientes</p>
+                        <p>Usuarios</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('servicios.index')}}" class="nav-link  {{ (request()->routeIs('servicios.*')) ? 'active' : '' }}">
+                    <a href="{{route('servicios.index')}}"
+                        class="nav-link  {{ (request()->routeIs('servicios.*')) ? 'active' : '' }}">
                         <i class="fal fa-circle-notch nav-icon"></i>
                         <p>Servicios</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('horarios.index')}}" class="nav-link  {{ (request()->routeIs('horarios.*')) ? 'active' : '' }}">
+                    <a href="{{route('horarios.index')}}"
+                        class="nav-link  {{ (request()->routeIs('horarios.*')) ? 'active' : '' }}">
                         <i class="fal fa-circle-notch nav-icon"></i>
                         <p>Horarios</p>
                     </a>
                 </li>
+
                 {{-- Listado desplegable para agrupar elementos --}}
                 {{-- <li class="nav-item has-treeview menu-open">
                     <a href="#" class="nav-link active">

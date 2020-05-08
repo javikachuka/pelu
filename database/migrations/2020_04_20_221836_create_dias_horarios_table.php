@@ -19,6 +19,7 @@ class CreateDiasHorariosTable extends Migration
             $table->foreign('dia_id')->references('id')->on('dias') ;
             $table->unsignedBigInteger('horario_id') ;
             $table->foreign('horario_id')->references('id')->on('horarios') ;
+            $table->softDeletes() ;
             $table->timestamps();
         });
     }

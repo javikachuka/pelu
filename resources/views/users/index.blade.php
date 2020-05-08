@@ -1,11 +1,13 @@
 @extends('admin.index')
 @section('content')
 
+@include('messageError')
 <div class="card">
     <div class="card-header">
         <div class="row">
             <div class="col-md-auto">
                 <h3>Clientes Registrados</h3>
+
             </div>
             <div class="col-md-auto">
                 <button type="button" class="btn btn-sm btn-secondary"
@@ -36,8 +38,13 @@
                     <td>{{$user->getFecha()}}</td>
                     <td>{{$user->getEdad()}} años</td>
                     <td class="d-flex justify-content-center ">
-                        <a class="p-1 text-primary"><i class="fal fa-edit"></i></a>
-                        <a class="p-1 text-danger"><i class="fal fa-trash-alt"></i></a>
+                        {{-- <button type="button" name="" class="btn btn-outline-primary btn-sm"><i
+                                class="fal fa-edit"></i></button> --}}
+                        {{-- <button type="button" name="" val-user="{{$user->id}}" class="delete btn btn-outline-danger
+                        btn-sm"><i class="fal fa-trash-alt"></button> --}}
+                            <a class="p-1 text-primary"><i class="fal fa-edit"></i></a>
+                            <a class="p-1 text-danger delete" val-user="{{$user->id}}"><i
+                                    class="fal fa-trash-alt"></i></a>
                     </td>
                 </tr>
                 @endforeach
@@ -46,3 +53,22 @@
     </div>
 </div>
 @endsection
+
+@include('modals.confirmDelete')
+
+@push('scripts')
+<script>
+    $(document).on('click', '.delete', function(){
+    id = $(this).attr('val-user');
+    url2="{{route('users.delete',":id")}}";
+    url2=url2.replace(':id',id);
+
+    $('#formDelete').attr('action',url2);
+    $('#confirmDelete').modal('show');
+    });
+    
+    $('#formDelete').on('submit',function(){
+    $('#ok_delete').text('Eliminando...')
+    });
+</script>
+@endpush
