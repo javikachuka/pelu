@@ -48,7 +48,6 @@
 </div>
 @endsection
 @include('modals.confirmDelete')
-
 @push('scripts')
 <script>
     $(document).on('click', '.delete', function(){
@@ -59,7 +58,7 @@
     $('#formDelete').attr('action',url2);
     $('#confirmDelete').modal('show');
     });
-    
+
     $('#formDelete').on('submit',function(){
     $('#ok_delete').text('Eliminando...')
     });

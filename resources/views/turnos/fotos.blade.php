@@ -5,92 +5,88 @@
         <div class="row">
             <div class="col-md-auto">
                 <h3>Fotos</h3>
+                <ul>
+                    <li>Puede cargar hasta un máximo de tres fotos</li>
+                    <li>Al menos una foto es requerida</li>
+                    <li>Pidale al cliente que sonria <i class="fal fa-smile-beam"></i></li>
+                </ul>
             </div>
         </div>
     </div>
     <form class="form-group " method="POST" enctype="multipart/form-data" action="{{route("turnos.saveFotos")}}">
         <div class="card-body">
-            <div class="form-group" id="fotitos">
-                <label for="">Foto del trabajo finalizado</label>
-                <div class="row">
-                    <div class="col-md-4" id="otro0">
-                        <div id="preview0" class="rounded float-left">
-                        </div>
-                        <input class="custom-file" id="imagenTrabajo0" type="file" name="fotos[]" accept="image/*"
-                            capture="camera" style="" required />
-                    </div>
-                    <div class="btn-group-vertical">
-                        <button type="button" id="agregar" class="btn btn-secondary">Agregar <i class="fal fa-plus"></i></button>
-                    </div>
-                </div>
-
-            </div>
-            <div class="form-group">
-            </div>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="2">
+                            Cliente: {{$turno->usuario->name}} {{$turno->usuario->apellido}}
+                        </th>
+                    </tr>
+                    <input type="hidden" value="{{$turno->id}}" name="turno_id">
+                </thead>
+                <tbody>
+                    <tr>
+                        <td width="40%">
+                            <input type="file" class="filestyle" data-text="Foto" onchange="cargarFoto(1,event.target)" accept="image/*" name="fotos[]"
+                                data-placeholder="Primer foto" required>
+                        </td>
+                        <td width="80%">
+                            <div id="preview1" class="text-center">
+                            </div>
+                        </td>
+                    <tr>
+                        <td width="40%">
+                            <input type="file" class="filestyle" data-text="Foto" onchange="cargarFoto(2,event.target)" accept="image/*" name="fotos[]"
+                                data-placeholder="Segunda foto">
+                        </td>
+                        <td width="80%">
+                            <div id="preview2" class="text-center">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="40%">
+                            <input type="file" class="filestyle" data-text="Foto" onchange="cargarFoto(3, event.target)" accept="image/*" name="fotos[]"
+                                data-placeholder="Tercer foto">
+                        </td>
+                        <td width="80%">
+                            <div id="preview3" class="text-center" >
+                            </div>
+                        </td>
+                    </tr>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        <div class="card-footer">
-            <button type="submit" class="btn btn-sm btn-success">Guardar</button>
+        <div class="float-right mr-4">
+            <a href="javascript:history.back()" class="btn btn-danger btn-sm">Cancelar</a>
+            <button type="submit" class="btn btn-secondary btn-sm">Guardar</button>
         </div>
-    @csrf
+        @csrf
     </form>
 </div>
 @endsection
 
 @push('scripts')
+
 <script>
-    var indice = 0 ;
-    console.log(indice);
-    //cargar imagen local de forma dinamica
-    document.getElementById("imagenTrabajo"+indice).onchange = function(e) {
-            // Creamos el objeto de la clase FileReader
-            let reader = new FileReader();
+    function cargarFoto(n,target){
+        // Creamos el objeto de la clase FileReader
+        let reader = new FileReader();
 
-            // Leemos el archivo subido y se lo pasamos a nuestro fileReader
-            reader.readAsDataURL(e.target.files[0]);
+        // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+        reader.readAsDataURL(target.files[0]);
 
-            // Le decimos que cuando este listo ejecute el código interno
-            reader.onload = function(){
-                let preview = document.getElementById('preview'+indice) ;
-                let otro = document.getElementById('otro') ;
-                image = document.createElement('img');
-                image.src = reader.result;
-                image.height='240';
-                image.width='320';
-                preview.innerHTML = '';
-                preview.append(image);
-            };
+        // Le decimos que cuando este listo ejecute el código interno
+        reader.onload = function(){
+            let preview = document.getElementById('preview'+n) ;
+            image = document.createElement('img');
+            image.src = reader.result;
+            image.height='240';
+            image.width='320';
+            preview.innerHTML = '';
+            preview.append(image);
+        };
     }
-
-    $('#agregar').click(function(){
-        indice += 1 ;
-        var html = '' ;
-
-        html =  '<div class="col-md-4" id="otro'+indice+'">'+
-                '<div id="preview'+indice+'" class="rounded float-left">'+
-                '</div>'+
-               ' <input class="custom-file" id="imagenTrabajo'+indice+'" type="file" name="fotos[]" accept="image/*" capture="camera" style="" required />'+
-               '</div>' ;
-        var aux = indice-1 ;
-        $('#otro'+aux+'').after(html) ;
-
-        document.getElementById("imagenTrabajo"+indice).onchange = function(e) {
-            // Creamos el objeto de la clase FileReader
-            let reader = new FileReader();
-
-            // Leemos el archivo subido y se lo pasamos a nuestro fileReader
-            reader.readAsDataURL(e.target.files[0]);
-
-            // Le decimos que cuando este listo ejecute el código interno
-            reader.onload = function(){
-                let preview = document.getElementById('preview'+indice),
-                image = document.createElement('img');
-                image.src = reader.result;
-                image.height='240';
-                image.width='320';
-                preview.innerHTML = '';
-                preview.append(image);
-            };
-    }
-    }) ;
 </script>
 @endpush

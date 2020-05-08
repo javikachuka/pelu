@@ -32,7 +32,7 @@
                     <td>{{$turno->id}}</td>
                     <td>{{$turno->getFecha()}}</td>
                     <td>{{$turno->hora}}</td>
-                    <td>{{$turno->usuario->name}}</td>
+                    <td>{{$turno->usuario->name}} {{$turno->usuario->apellido}}</td>
                     <td>{{$turno->servicio->servicio}}</td>
                     <td>
                         @if ($turno->finalizado)
@@ -42,8 +42,13 @@
                         @endif
                     </td>
                     <td class="d-flex justify-content-center ">
-                        <a class="p-2 text-dark" href="{{route('turnos.fotos')}}"><i
+                        @if ($turno->finalizado)
+                        <a class="p-2 text-dark" href="{{route('turnos.show', $turno->id)}}"><i
+                            class="fal fa-eye"></i></a>
+                        @else
+                        <a class="p-2 text-dark" href="{{route('turnos.fotos', $turno->id)}}"><i
                                 class="fal fa-camera-retro"></i></a>
+                        @endif
                         <a class="p-2 text-success"><i class="fal fa-fast-forward"></i></a>
                         <a class="p-2 text-danger"><i class="fal fa-trash-alt"></i></a>
                     </td>

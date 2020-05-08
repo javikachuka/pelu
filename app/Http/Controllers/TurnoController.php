@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Dia;
+use App\Foto;
 use App\Horario;
 use App\Servicio;
 use App\Turno;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -33,12 +35,25 @@ class TurnoController extends Controller
     public function saveFotos(Request $request)
     {
         if ($request->hasFile('fotos')) {
+            $path = '/img/fotos/' ;
+            $turno = Turno::find($request->turno_id) ;
             for ($i = 0; $i < count($request->fotos); $i++) {
                 $f = $request->fotos[$i];
                 $name = $f->getClientOriginalName();
-                $img = Image::make($f)->resize(320, 240);
-                $img->save(public_path('/img/fotos/') . $name);
+                try {
+                    $img = Image::make($f)->resize(640, 480);
+                    $img->save(public_path($path) . $name);
+                    $foto = new Foto ;
+                    $foto->uri = $path.$name ;
+                    $foto->turno_id = $turno->id ;
+                    $foto->save() ;
+                } catch (Throwable $th) {
+                    return redirect()->route('turnos.index')->withErrors(['fotos'=>'Hubo un error al guardar las fotos']) ;
+                }
             }
+            $turno->finalizado = true ;
+            $turno->update() ;
+            return redirect()->route('turnos.index') ;
         } else {
             return 0;
         }
@@ -277,9 +292,15 @@ class TurnoController extends Controller
         return sprintf($format, $hours, $minutes);
     }
 
-    public function fotos()
+    public function fotos($id)
     {
-        return view('turnos.fotos');
+        $turno = Turno::find($id) ;
+        return view('turnos.fotos', compact('turno'));
+    }
+
+    public function show($id){
+        $turno = Turno::find($id) ;
+        return view('turnos.show', compact('turno')) ;
     }
 
     private function validacionCamposTurno(Request $request)
