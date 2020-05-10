@@ -295,7 +295,15 @@ class TurnoController extends Controller
     public function fotos($id)
     {
         $turno = Turno::find($id) ;
-        return view('turnos.fotos', compact('turno'));
+        $hoy = Carbon::now()->setTime(0,0,0) ;
+        $fechaTurno = Carbon::create($turno->fecha) ;
+        if($hoy->greaterThanOrEqualTo($fechaTurno) ){
+            return view('turnos.fotos', compact('turno'));
+        }else{
+            // alert('Debe ser el dia del turno poder cargar las fotos');
+            return redirect()->back() ;
+        }
+
     }
 
     public function show($id){
