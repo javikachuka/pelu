@@ -1,8 +1,7 @@
-@extends('admin/index')
+@extends('admin.index')
 
 
 @section('content')
-@include('messageError')
 <div class="card">
     <div class="card-header">
         <div class="row">

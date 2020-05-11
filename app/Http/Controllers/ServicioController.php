@@ -25,7 +25,12 @@ class ServicioController extends Controller
 
         $servicios = Servicio::create(['servicio' => $request->servicio, 'duracion' => $request->duracion]);
 
-        return redirect()->route('servicios.index');
+        $notificacion = array(
+            'mensaje' => 'Servicio creado correctamente!',
+            'tipo_alerta' => 'success',
+            'accion' => 'Guardado'
+        );
+        return redirect()->route('servicios.index')->with($notificacion);
     }
 
     public function getDuracion($id)
@@ -59,7 +64,12 @@ class ServicioController extends Controller
             return redirect()->back()->withErrors('No se puede borrar los servicios que tienen turnos asignados');
         }
         if ($servicio->delete()) {
-            return redirect()->back()->with('warning', 'Se borro el servicio con exito');
+            $notificacion = array(
+                'mensaje' => 'Servicio borrado correctamente!',
+                'tipo_alerta' => 'success',
+                'accion' => 'Borrado'
+            );
+            return redirect()->back()->with($notificacion);
         }
         return redirect()->back()->withErrors('No se pudo eliminar el servicio');
     }

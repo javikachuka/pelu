@@ -22,6 +22,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     {{-- Bootstrap DatePicker --}}
     <link rel="stylesheet" href=" {{asset('css/bootstrap-datepicker.min.css')}} ">
+    {{-- Toastr (es para alertas) --}}
+    <link rel="stylesheet" href=" {{asset('admin-lte/plugins/toastr/toastr.min.css')}} ">
 
 </head>
 
@@ -39,12 +41,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0 text-dark">Starter Page</h1>
+                            <h1 class="m-0 text-dark">Pagina de Inicio</h1>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Starter Page</li>
+                                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                                <li class="breadcrumb-item active">Pagina de Inicio</li>
                             </ol>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -88,6 +90,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{asset('js/idioma_datepicker.js')}}"></script>
     {{-- Bootstrap FileStyle --}}
     <script type="text/javascript" src="{{ asset('js/bootstrap-filestyle.min.js') }}"> </script>
+    {{-- Toastr --}}
+    <script type="text/javascript" src="{{ asset('admin-lte/plugins/toastr/toastr.min.js') }}"> </script>
+    {{-- Mostrar alertas con toastr --}}
+    <script>
+        @if(Session::has('mensaje'))
+        var tipo = "{{ Session::get('tipo_alerta', 'info') }}";
+        switch(tipo){
+            case 'info':
+                toastr.info("{{ Session::get('mensaje') }}", "{{ Session::get('accion') }}");
+                break;
+
+            case 'warning':
+                toastr.warning("{{ Session::get('mensaje') }}","{{ Session::get('accion') }}");
+                break;
+
+            case 'success':
+                toastr.success("{{ Session::get('mensaje') }}", "{{ Session::get('accion') }}");
+                break;
+
+            case 'error':
+                toastr.error("{{ Session::get('mensaje') }}", "{{ Session::get('accion') }}");
+                break;
+        }
+      @endif
+    </script>
     @stack('scripts')
 </body>
 
