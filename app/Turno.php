@@ -31,4 +31,8 @@ class Turno extends Model
         $f = Carbon::create($this->fecha) ;
         return $f->isoFormat('dddd, D MMM YYYY');
     }
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
 }

@@ -12,14 +12,16 @@ class UserSeed extends Seeder
      */
     public function run()
     {
-        $user = new User() ;
-        $user->name = 'admin' ;
-        $user->apellido = 'admin' ;
-        $user->dni = '00.000.000' ;
-        $user->fecha_nacimiento = new DateTime('now') ;
-        $user->email = 'admin@admin.com' ;
-        $user->password = Hash::make('123') ;
-        $user->save() ;
+        $user = new User();
+        $user->name = 'admin';
+        $user->apellido = 'admin';
+        $user->dni = '00.000.000';
+        $user->fecha_nacimiento = new DateTime('now');
+        $user->email = 'admin@admin.com';
+        $user->password = Hash::make('123');
+        $user->empresa_id = 1;
+        $user->save();
         $user->roles()->sync(1);
+
     }
 }

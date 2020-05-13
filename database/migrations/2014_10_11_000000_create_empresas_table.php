@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateServiciosTable extends Migration
+class CreateEmpresasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateServiciosTable extends Migration
      */
     public function up()
     {
-        Schema::create('servicios', function (Blueprint $table) {
+        Schema::create('empresas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('servicio');
-            $table->string('descripcion')->nullable();
-            $table->time('duracion');
-            //la cantidad de personas que se puede atender por servicios.
+            $table->string('nombre');
+            //el nombre del enlace de la empresa debe ser unico por ejemplo wwww.Pelu.com/SLUG
+            $table->string('slug')->unique();
+            $table->string('email');
+            //cantidad de personas que puede atender el local a la vez
             $table->integer('cantidadPersonas');
-            $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -34,6 +33,6 @@ class CreateServiciosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('servicios');
+        Schema::dropIfExists('empresas');
     }
 }

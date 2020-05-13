@@ -15,4 +15,8 @@ class Horario extends Model
     {
         return $this->belongsToMany(Dia::class, 'dias_horarios');
     }
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
 }

@@ -97,7 +97,8 @@
         var html = '';
         //AJAX
         $.get(url ,function(data){
-            html += '<p> El servicio dura apox. '+data+' min.</p>' ;
+            console.log(data);
+            html += '<p> El servicio dura apox. '+data+' </p>' ;
             $('#info').html(html);
         });
 

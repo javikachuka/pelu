@@ -19,4 +19,8 @@ class Servicio extends Model
     {
         return Turno::where([['servicio_id', $this->id], ['finalizado', false] /*, ['deleted_at', '<>', true]*/])->get();
     }
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
 }

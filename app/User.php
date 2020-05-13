@@ -12,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use SoftDeletes ;
+    use SoftDeletes;
     use Notifiable;
 
     /**
@@ -44,8 +44,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function roles(){
+    public function roles()
+    {
         return $this->belongsToMany(Role::class);
+    }
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
     }
 
     public function getFecha()
@@ -54,8 +59,9 @@ class User extends Authenticatable
         return $date;
     }
 
-    public function getEdad(){
-        $date = Carbon::create($this->fecha_nacimiento) ;
+    public function getEdad()
+    {
+        $date = Carbon::create($this->fecha_nacimiento);
         return $date->age;
     }
 }

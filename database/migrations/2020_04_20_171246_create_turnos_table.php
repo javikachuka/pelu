@@ -24,6 +24,8 @@ class CreateTurnosTable extends Migration
             $table->foreign('horario_id')->references('id')->on('horarios');
             $table->unsignedBigInteger('servicio_id');
             $table->foreign('servicio_id')->references('id')->on('servicios');
+            $table->unsignedBigInteger('empresa_id');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->softDeletes() ;
             $table->timestamps();
         });

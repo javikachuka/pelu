@@ -7,6 +7,9 @@
         <ul>
             <li>El servicio implica, los servicios que ofrece la empresa para sus clientes</li>
             <li>La duracion del servicio se utilzara para calcular los turnos de sus clientes</li>
+            <li>La cantidad de personas que pueden ser atendidas al mismo tiempo en el servicio (Corte de cabello hay
+                dos peluqueros entonces 2 peronas pueden ser atendidas)</li>
+            <li>La descripcion permite explicar al cliente como se realiza el servicio (¡Atraelo!)</li>
         </ul>
     </div>
     <form class="form-group " method="POST" action="{{route("servicios.save")}}">
@@ -18,9 +21,19 @@
                     placeholder="Por ej. Corte de Cabello Masculino" required>
             </div>
             <div class="form-group">
-                <label for="duracion">Duracion del servicio (Minutos)</label>
-                <input type="number" class="form-control" id="duracion" name="duracion" min="15" max="300" value="{{ old('duracion') }}"
-                    required>
+                <label for="duracion">Duracion del Servicio (HORA:MINUTO)</label>
+                <input type="time" class="form-control" id="duracion" name="duracion" value="{{ old('duracion') }}"
+                    step="1800" required>
+            </div>
+            <div class="form-group">
+                <label for="cantidadPersonas">Cantidad de Personas</label>
+                <input type="number" class="form-control" id="cantidadPersonas" name="cantidadPersonas" min="1"
+                    value="{{ old('cantidadPersonas') }}" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripcion</label>
+                <textarea name="descripcion" id="descripcion" cols="30" rows="5" class="form-control"
+                    value={{ old('descripcion') }}> </textarea>
             </div>
         </div>
 

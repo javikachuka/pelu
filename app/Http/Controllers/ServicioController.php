@@ -22,8 +22,10 @@ class ServicioController extends Controller
     public function save(Request $request)
     {
         $this->validacionCamposServicio($request);
-
-        $servicios = Servicio::create(['servicio' => $request->servicio, 'duracion' => $request->duracion]);
+        $servicios = Servicio::create([
+            'servicio' => $request->servicio, 'duracion' => $request->duracion, 'descripcion' => $request->descripcion, 'cantidadPersonas' => $request->cantidadPersonas,
+            'empresa_id' => auth()->user()->empresa_id
+        ]);
 
         $notificacion = array(
             'mensaje' => 'Servicio creado correctamente!',
@@ -43,7 +45,7 @@ class ServicioController extends Controller
     {
         $rules = [
             'servicio'    => 'required|max:255|unique:servicios,servicio',
-            'duracion'      => 'required|integer'
+            'duracion'      => 'required'
         ];
 
 

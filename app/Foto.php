@@ -10,4 +10,8 @@ class Foto extends Model
     {
         return $this->belongsTo(Turno::class);
     }
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
 }
