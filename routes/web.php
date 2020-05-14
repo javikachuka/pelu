@@ -48,3 +48,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('turnos/ver/{id}', 'TurnoController@show')->name('turnos.show');
     Route::post('turnos/fotos', 'TurnoController@saveFotos')->name('turnos.saveFotos');
 });
+
+//esta ruta va a permitir el registro de una empresa
+Route::get('/registroEmpresa', 'UserController@createRegistroEmpresa')->name('users.createRegistroEmpresa');
+
+//esta ruta va a permitir el registro de aquellos clientes de una determinada empresa
+Route::get('/{slug}/registroClientes', 'UserController@createRegistroClientesEmpresa')->name('users.createRegistroClientesEmpresa');
+
+//esta ruta va a permitir el registro de cualquier usuario que quiera reservar turnos
+Route::get('/registroClientes', 'UserController@createRegistroClientes')->name('users.createRegistroClientes');
+

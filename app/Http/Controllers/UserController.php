@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Empresa;
 use App\User;
 use Carbon\Carbon;
 use Carbon\Traits\Date;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -57,7 +59,7 @@ class UserController extends Controller
 
         $this->validate($request, $rules, $mensaje);
     }
-    
+
     public function delete(Request $request, $id)
     {
 
@@ -79,5 +81,21 @@ class UserController extends Controller
             return redirect()->back()->with('warning', 'Se borro el usuario con exito');
         }
         return redirect()->back()->withErrors('No se pudo eliminar el usuario');
+    }
+
+    function createRegistroClientesEmpresa($slug){
+
+        $empresa = Empresa::where('slug' ,$slug)->firstOrFail() ;
+        return view('users.registroClientes', compact('empresa')) ;
+    }
+
+
+    function createRegistroClientes(){
+
+        return view('users.registroClientes') ;
+    }
+
+    function createRegistroEmpresa(){
+        return view('users.registroEmpresa') ;
     }
 }

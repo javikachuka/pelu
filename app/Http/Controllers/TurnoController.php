@@ -275,7 +275,7 @@ class TurnoController extends Controller
 
     public function fotos($id)
     {
-        $turno = Turno::find($id);
+        $turno = Turno::findOrFail($id);
         $hoy = Carbon::now()->setTime(0, 0, 0);
         $fechaTurno = Carbon::create($turno->fecha);
         if ($hoy->greaterThanOrEqualTo($fechaTurno)) {
@@ -288,7 +288,7 @@ class TurnoController extends Controller
 
     public function show($id)
     {
-        $turno = Turno::find($id);
+        $turno = Turno::findOrFail($id);
         return view('turnos.show', compact('turno'));
     }
 
