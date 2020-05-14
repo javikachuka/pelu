@@ -54,8 +54,6 @@
                     </td>
                 </tr>
                 @endforeach
-                @else
-                <td class="text-muted">No hay turnos registrados...</td>
                 @endif
             </tbody>
         </table>

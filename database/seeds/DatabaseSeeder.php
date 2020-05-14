@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             DiasSeeder::class,
             RolSeed::class,
-            EmpresaSeeder::class,
+            EmpresaSeed::class,
             UserSeed::class,
         ]);
     }

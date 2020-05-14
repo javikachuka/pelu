@@ -48,8 +48,6 @@
                     </td>
                 </tr>
                 @endforeach
-                @else
-                    <td class="text-muted">No hay horarios registrados...</td>
                 @endif
             </tbody>
         </table>

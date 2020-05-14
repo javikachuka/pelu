@@ -66,7 +66,12 @@ class HorarioController extends Controller
         $horario->empresa_id = auth()->user()->empresa_id;
         $horario->save();
         $horario->dias()->sync($request->dias);
-        return redirect()->route('horarios.index');
+        $notificacion = array(
+            'mensaje' => 'Horario creado correctamente!',
+            'tipo_alerta' => 'success',
+            'accion' => 'Guardado'
+        );
+        return redirect()->route('horarios.index')->with($notificacion);
     }
 
     private function validacionCamposHorario(Request $request)
@@ -89,6 +94,11 @@ class HorarioController extends Controller
     {
         $horario = Horario::find($id);
         $horario->delete();
-        return redirect()->route('horarios.index');
+        $notificacion = array(
+            'mensaje' => 'Horario borrado correctamente!',
+            'tipo_alerta' => 'success',
+            'accion' => 'Borrado'
+        );
+        return redirect()->route('horarios.index')->with($notificacion);
     }
 }

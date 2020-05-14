@@ -3,7 +3,7 @@
 use App\Empresa;
 use Illuminate\Database\Seeder;
 
-class EmpresaSeeder extends Seeder
+class EmpresaSeed extends Seeder
 {
     /**
      * Run the database seeds.

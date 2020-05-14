@@ -38,8 +38,6 @@
                     </td>
                 </tr>
                 @endforeach
-                @else
-                <td class="text-muted">No hay servicios registrados...</td>
                 @endif
             </tbody>
         </table>
