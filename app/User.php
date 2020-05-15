@@ -48,9 +48,20 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+    //si es un empleado pertenece a una empresa
     public function empresa()
     {
         return $this->belongsTo(Empresa::class);
+    }
+    // empresas a la que esta suscripta el usuario
+    public function suscripciones()
+    {
+        return $this->hasMany(Suscripcion::class);
+    }
+
+    public function empresaSuscriptas()
+    {
+        return $this->belongsToMany(Empresa::class, 'suscripciones', 'user_id', 'empresa_id');
     }
 
     public function getFecha()

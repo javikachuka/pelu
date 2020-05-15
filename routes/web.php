@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// Route::get('/{slug}}', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group(function () {
@@ -57,4 +58,3 @@ Route::get('/{slug}/registroClientes', 'UserController@createRegistroClientesEmp
 
 //esta ruta va a permitir el registro de cualquier usuario que quiera reservar turnos
 Route::get('/registroClientes', 'UserController@createRegistroClientes')->name('users.createRegistroClientes');
-

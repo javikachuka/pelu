@@ -10,10 +10,15 @@ class Empresa extends Model
     use SoftDeletes;
 
     protected $guarded = [];
-
-    public function usuarios()
+    // empleados
+    public function empleados()
     {
         return $this->hasMany(User::class);
+    }
+    //usuarios suscriptos
+    public function suscriptores()
+    {
+        return $this->belongsToMany(User::class, 'suscripciones', 'empresa_id', 'user_id');
     }
     public function servicios()
     {
