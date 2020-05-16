@@ -58,3 +58,5 @@ Route::get('/{slug}/registroClientes', 'UserController@createRegistroClientesEmp
 
 //esta ruta va a permitir el registro de cualquier usuario que quiera reservar turnos
 Route::get('/registroClientes', 'UserController@createRegistroClientes')->name('users.createRegistroClientes');
+
+Route::get('/{slug}', 'EmpresaController@index')->name('empresas.index');

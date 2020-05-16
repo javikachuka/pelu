@@ -60,6 +60,13 @@
                         <p>Horarios</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('empresas.index',auth()->user()->empresa->slug)}}"
+                        class="nav-link  {{ (request()->routeIs('empresas.*')) ? 'active' : '' }}">
+                        <i class="fal fa-circle-notch nav-icon"></i>
+                        <p>Mi Inicio</p>
+                    </a>
+                </li>
 
                 {{-- Listado desplegable para agrupar elementos --}}
                 {{-- <li class="nav-item has-treeview menu-open">
