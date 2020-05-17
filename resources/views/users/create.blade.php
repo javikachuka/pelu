@@ -50,3 +50,10 @@
 
 </div>
 @endsection
+@push('scripts')
+    <script>
+        $(document).ready(function(){
+            $('#dni').inputmask("99.999.999");
+        });
+    </script>
+@endpush

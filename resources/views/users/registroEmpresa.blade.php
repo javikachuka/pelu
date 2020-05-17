@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form method="POST" action="{{ route('register') }}">
+            <form method="POST" action="{{ route('users.saveRegistroEmpresa') }}">
                 @csrf
                 <div class="card">
                     <div class="card-header">
@@ -152,14 +152,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="rubro_id"
-                                        class="col-md-4 col-form-label text-md-right">Rubro</label>
+                                    <label for="rubro_id" class="col-md-4 col-form-label text-md-right">Rubro</label>
 
                                     <div class="col-md-6">
                                         <select name="rubro_id" class=" form-control">
                                             <option value="" selected disabled>--Seleccione--</option>
                                             @foreach ($rubros as $rubro)
-                                            <option value="{{$rubro->id}}">{{$rubro->nombre}}</option>
+                                            <option value="{{$rubro->id}}" @if($rubro->id == old('rubro_id')) selected
+                                                @endif>{{$rubro->nombre}}</option>
                                             @endforeach
                                         </select>
                                         @error('rubro_id')
@@ -206,14 +206,14 @@
                                 <br>
                                 <label for="">Direccion</label>
                                 <div class="form-group row">
-                                    <label for="pais_id"
-                                        class="col-md-4 col-form-label text-md-right">Pais</label>
+                                    <label for="pais_id" class="col-md-4 col-form-label text-md-right">Pais</label>
 
                                     <div class="col-md-6">
-                                        <select name="pais_id" class=" form-control">
+                                        <select name="pais_id" id="pais_id" class=" form-control">
                                             <option value="" selected disabled>--Seleccione--</option>
                                             @foreach ($paises as $pais)
-                                            <option value="{{$pais->id}}">{{$pais->pais}}</option>
+                                            <option value="{{$pais->id}}" @if($pais->id == old('pais_id')) selected
+                                                @endif>{{$pais->pais}}</option>
                                             @endforeach
                                         </select>
                                         @error('pais_id')
@@ -228,10 +228,11 @@
                                         class="col-md-4 col-form-label text-md-right">Provincia</label>
 
                                     <div class="col-md-6">
-                                        <select name="provincia_id" class=" form-control">
+                                        <select name="provincia_id" id="provincia_id" class=" form-control" disabled>
                                             <option value="" selected disabled>--Seleccione--</option>
                                             @foreach ($provincias as $provincia)
-                                            <option value="{{$provincia->id}}">{{$provincia->provincia}}</option>
+                                            <option value="{{$provincia->id}}" @if($provincia->id == old('provincia_id')) selected
+                                                @endif>{{$provincia->provincia}}</option>
                                             @endforeach
                                         </select>
                                         @error('provincia_id')
@@ -246,10 +247,11 @@
                                         class="col-md-4 col-form-label text-md-right">Localidad</label>
 
                                     <div class="col-md-6">
-                                        <select name="localidad_id" class=" form-control">
+                                        <select name="localidad_id" id="localidad_id" class="form-control" disabled>
                                             <option value="" selected disabled>--Seleccione--</option>
                                             @foreach ($localidades as $localidad)
-                                            <option value="{{$localidad->id}}">{{$localidad->localidad}}</option>
+                                            <option value="{{$localidad->id}}" @if($localidad->id == old('localidad_id')) selected
+                                                @endif>{{$localidad->localidad}}</option>
                                             @endforeach
                                         </select>
                                         @error('localidad_id')
@@ -264,9 +266,8 @@
 
                                     <div class="col-md-6">
                                         <input id="calle" type="text"
-                                            class="form-control @error('calle') is-invalid @enderror"
-                                            name="calle" value="{{ old('calle') }}" required
-                                            autocomplete="calle" autofocus>
+                                            class="form-control @error('calle') is-invalid @enderror" name="calle"
+                                            value="{{ old('calle') }}" required autocomplete="calle" autofocus>
 
                                         @error('calle')
                                         <span class="invalid-feedback" role="alert">
@@ -292,6 +293,37 @@
         </div>
     </div>
 </div>
-
-
 @endsection
+@push('scripts')
+<script>
+    $(document).ready(function(){
+        $('#dni').inputmask("99.999.999");
+        $('#pais_id').change(function(){
+            $('#provincia_id').removeAttr('disabled');
+            var id = $(this).val();
+            var url = "{{ route('paises.obtenerProvincias', ":id") }}" ;
+            url = url.replace(':id' , id) ;
+            $.get(url, function(data){
+                var html_select = '<option value="" selected disabled>--Seleccione--</option>' ;
+                for(var i = 0 ; i<data.length ; i++){
+                     html_select += '<option value="'+data[i].id+'">'+data[i].provincia+'</option>' ;
+                }
+                 $('#provincia_id').html(html_select);
+            });
+        });
+        $('#provincia_id').change(function(){
+            $('#localidad_id').removeAttr('disabled');
+            var id = $(this).val();
+            var url = "{{ route('provincias.obtenerLocalidades', ":id") }}" ;
+            url = url.replace(':id' , id) ;
+            $.get(url, function(data){
+                var html_select = '<option value="" selected disabled>--Seleccione--</option>' ;
+                for(var i = 0 ; i<data.length ; i++){
+                     html_select += '<option value="'+data[i].id+'">'+data[i].localidad+'</option>' ;
+                }
+                 $('#localidad_id').html(html_select);
+            });
+        });
+    }) ;
+</script>
+@endpush

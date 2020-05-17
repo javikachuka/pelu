@@ -87,14 +87,14 @@ class UserController extends Controller
         return redirect()->back()->withErrors('No se pudo eliminar el usuario');
     }
 
-    function createRegistroClientesEmpresa($slug){
+    public function createRegistroClientesEmpresa($slug){
 
         $empresa = Empresa::where('slug' ,$slug)->firstOrFail() ;
         return view('users.registroClientes', compact('empresa')) ;
     }
 
 
-    function createRegistroClientes(){
+    public function createRegistroClientes(){
 
         return view('users.registroClientes') ;
     }
@@ -105,5 +105,9 @@ class UserController extends Controller
         $localidades = Localidad::all() ;
         $rubros = Rubro::all();
         return view('users.registroEmpresa' , compact('paises', 'provincias', 'localidades', 'rubros')) ;
+    }
+
+    public function saveRegistroEmpresa(Request $request){
+        return $request;
     }
 }

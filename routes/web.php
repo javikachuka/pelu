@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
 
 //esta ruta va a permitir el registro de una empresa
 Route::get('/registroEmpresa', 'UserController@createRegistroEmpresa')->name('users.createRegistroEmpresa');
+Route::post('/registroEmpresa', 'UserController@saveRegistroEmpresa')->name('users.saveRegistroEmpresa');
 
 //esta ruta va a permitir el registro de aquellos clientes de una determinada empresa
 Route::get('/{slug}/registroClientes', 'UserController@createRegistroClientesEmpresa')->name('users.createRegistroClientesEmpresa');
@@ -60,3 +61,10 @@ Route::get('/{slug}/registroClientes', 'UserController@createRegistroClientesEmp
 Route::get('/registroClientes', 'UserController@createRegistroClientes')->name('users.createRegistroClientes');
 
 Route::get('/{slug}', 'EmpresaController@index')->name('empresas.index');
+
+//carga de provincias
+Route::get('paises/{pais}', 'DireccionController@obtenerProvincias')->name('paises.obtenerProvincias');
+
+//carga de localidades
+Route::get('provincias/{provincia}', 'DireccionController@obtenerLocalidades')->name('provincias.obtenerLocalidades');
+
