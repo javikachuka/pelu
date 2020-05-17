@@ -19,6 +19,7 @@ class CreateEmpresasTable extends Migration
             //el nombre del enlace de la empresa debe ser unico por ejemplo wwww.Pelu.com/SLUG
             $table->string('slug')->unique();
             $table->string('email');
+            $table->string('telefono');
             //cantidad de personas que puede atender el local a la vez
             $table->integer('cantidadPersonas');
             $table->softDeletes();

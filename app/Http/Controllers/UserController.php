@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Empresa;
+use App\Rubro;
 use App\User;
 use Carbon\Carbon;
 use Carbon\Traits\Date;
+use Cardumen\ArgentinaProvinciasLocalidades\Models\Pais;
+use Cardumen\ArgentinaProvinciasLocalidades\Models\Provincia;
+use Cardumen\ArgentinaProvinciasLocalidades\Models\Localidad;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -96,6 +100,10 @@ class UserController extends Controller
     }
 
     function createRegistroEmpresa(){
-        return view('users.registroEmpresa') ;
+        $paises = Pais::all();
+        $provincias = Provincia::all();
+        $localidades = Localidad::all() ;
+        $rubros = Rubro::all();
+        return view('users.registroEmpresa' , compact('paises', 'provincias', 'localidades', 'rubros')) ;
     }
 }

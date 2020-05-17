@@ -43,8 +43,8 @@
         </table>
     </div>
 </div>
-@endsection
 @include('modals.confirmDelete')
+@endsection
 @push('scripts')
 <script>
     $(document).on('click', '.delete', function(){

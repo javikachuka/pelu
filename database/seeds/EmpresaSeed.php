@@ -16,6 +16,7 @@ class EmpresaSeed extends Seeder
             'nombre'=>'Barberia Jaime',
             'slug'=>'BARBERIA_JAIME',
             'email'=>'BarbeJaime@gmail.com',
+            'telefono'=>'3758520016',
             'cantidadPersonas'=>2]);
     }
 }
