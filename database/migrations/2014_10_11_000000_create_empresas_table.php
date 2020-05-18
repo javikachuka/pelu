@@ -22,6 +22,8 @@ class CreateEmpresasTable extends Migration
             $table->string('telefono');
             //cantidad de personas que puede atender el local a la vez
             $table->integer('cantidadPersonas');
+            $table->unsignedBigInteger('direccion_id');
+            $table->foreign('direccion_id')->references('id')->on('direcciones');
             $table->softDeletes();
             $table->timestamps();
         });

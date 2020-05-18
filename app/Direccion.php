@@ -21,4 +21,8 @@ class Direccion extends Model
     public function localidad(){
         return $this->hasOne(Localidad::class);
     }
+
+    public function empresa(){
+        return $this->belongsTo(Empresa::class);
+    }
 }

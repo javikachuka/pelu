@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             RolSeed::class,
             EmpresaSeed::class,
             UserSeed::class,
+            RubroSeed::class
         ]);
     }
 }

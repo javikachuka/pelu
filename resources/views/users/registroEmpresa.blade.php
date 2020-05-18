@@ -230,10 +230,6 @@
                                     <div class="col-md-6">
                                         <select name="provincia_id" id="provincia_id" class=" form-control" disabled>
                                             <option value="" selected disabled>--Seleccione--</option>
-                                            @foreach ($provincias as $provincia)
-                                            <option value="{{$provincia->id}}" @if($provincia->id == old('provincia_id')) selected
-                                                @endif>{{$provincia->provincia}}</option>
-                                            @endforeach
                                         </select>
                                         @error('provincia_id')
                                         <span class="invalid-feedback" role="alert">
@@ -249,10 +245,6 @@
                                     <div class="col-md-6">
                                         <select name="localidad_id" id="localidad_id" class="form-control" disabled>
                                             <option value="" selected disabled>--Seleccione--</option>
-                                            @foreach ($localidades as $localidad)
-                                            <option value="{{$localidad->id}}" @if($localidad->id == old('localidad_id')) selected
-                                                @endif>{{$localidad->localidad}}</option>
-                                            @endforeach
                                         </select>
                                         @error('localidad_id')
                                         <span class="invalid-feedback" role="alert">

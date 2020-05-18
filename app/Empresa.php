@@ -37,6 +37,9 @@ class Empresa extends Model
         return $this->hasMany(Horario::class);
     }
     public function rubros(){
-        return $this->belongsToMany(Rubro::class, 'rubro_id');
+        return $this->belongsToMany(Rubro::class);
+    }
+    public function direccion(){
+        return $this->hasOne(Direccion::class, 'direccion_id');
     }
 }

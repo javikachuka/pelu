@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Direccion;
 use App\Empresa;
 use App\Rubro;
 use App\User;
@@ -101,13 +102,61 @@ class UserController extends Controller
 
     function createRegistroEmpresa(){
         $paises = Pais::all();
-        $provincias = Provincia::all();
-        $localidades = Localidad::all() ;
         $rubros = Rubro::all();
-        return view('users.registroEmpresa' , compact('paises', 'provincias', 'localidades', 'rubros')) ;
+        return view('users.registroEmpresa' , compact('paises', 'rubros')) ;
     }
 
     public function saveRegistroEmpresa(Request $request){
-        return $request;
+        request()->validate([
+            'name' => 'required|max:255',
+            'apellido' => 'required|max:255',
+            'dni' => 'required|min:10',
+            'fecha_nacimiento' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8|same:password_confirmation',
+            'password_confirmation' => 'min:8',
+            'nombreEmpresa' => 'required|max:255',
+            'rubro_id' => 'required',
+            'emailEmpresa' => 'required|email|unique:empresas,email',
+            'telefonoEmpresa' => 'required',
+            'pais_id' => 'required',
+            'provincia_id' => 'required',
+            'localidad_id' => 'required',
+            'calle' => 'required|max:100',
+        ]);
+
+        $direccion = new Direccion();
+        $direccion->calle = $request->calle ;
+        $direccion->pais_id = $request->pais_id ;
+        $direccion->provincia_id = $request->provincia_id ;
+        $direccion->localidad_id = $request->localidad_id ;
+        $direccion->save();
+
+
+        $empresa = new Empresa();
+        $empresa->nombre = $request->nombreEmpresa;
+        $empresa->email = $request->emailEmpresa;
+        //falta corregir cambiar espacios por _
+        $empresa->slug = strtoupper($request->nombreEmpresa);
+        $empresa->telefono = $request->telefonoEmpresa;
+        $empresa->direccion_id = $direccion->id;
+        //falta agregar un inpiut en la view
+        $empresa->cantidadPersonas = 1;
+        $empresa->save();
+        $empresa->rubros()->sync($request->rubro_id) ;
+
+        $usuario= new User();
+        $usuario->name = $request->name ;
+        $usuario->apellido = $request->apellido ;
+        $usuario->dni = $request->dni ;
+        $usuario->fecha_nacimiento = $request->fecha_nacimiento ;
+        $usuario->email = $request->email ;
+        $usuario->password = Hash::make($request->password) ;
+        $usuario->empresa_id = $empresa->id;
+        $usuario->save() ;
+
+
+        return redirect()->route('login');
+
     }
 }
