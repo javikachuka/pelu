@@ -21,7 +21,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group(function () {
-
     Route::get('horarios', 'HorarioController@index')->name('horarios.index');
     Route::get('horarios/create', 'HorarioController@create')->name('horarios.create');
     Route::post('horarios', 'HorarioController@save')->name('horarios.save');
@@ -48,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('turnos/fotos/{id}', 'TurnoController@fotos')->name('turnos.fotos');
     Route::get('turnos/ver/{id}', 'TurnoController@show')->name('turnos.show');
     Route::post('turnos/fotos', 'TurnoController@saveFotos')->name('turnos.saveFotos');
+    Route::get('misTurnos', 'TurnoController@misTurnos')->name('turnos.misTurnos');
 });
 
 //esta ruta va a permitir el registro de una empresa
@@ -67,4 +67,3 @@ Route::get('paises/{pais}', 'DireccionController@obtenerProvincias')->name('pais
 
 //carga de localidades
 Route::get('provincias/{provincia}', 'DireccionController@obtenerLocalidades')->name('provincias.obtenerLocalidades');
-

@@ -14,6 +14,7 @@ class User extends Authenticatable
 {
     use SoftDeletes;
     use Notifiable;
+    use HasRolesAndPermissions;
 
     /**
      * The attributes that are mass assignable.
@@ -74,5 +75,10 @@ class User extends Authenticatable
     {
         $date = Carbon::create($this->fecha_nacimiento);
         return $date->age;
+    }
+
+    public function turnos()
+    {
+        return $this->hasMany(Turno::class);
     }
 }

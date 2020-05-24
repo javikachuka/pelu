@@ -20,7 +20,7 @@
                 <tr>
                     <th width="10%">#</th>
                     <th width="25%">Servicio</th>
-                    <th width="20%">Duracion (Minutos)</th>
+                    <th width="20%">Duracion (Horas:Minutos:Segundos)</th>
                     <th width="10%">Acciones</th>
                 </tr>
             </thead>
@@ -30,7 +30,7 @@
                 <tr>
                     <td>{{$servicio->id}}</td>
                     <td>{{$servicio->servicio}}</td>
-                    <td>{{$servicio->duracion}} minutos</td>
+                    <td>{{$servicio->duracion}} </td>
                     <td class="d-flex justify-content-center ">
                         <a class="p-1 text-primary"><i class="fal fa-edit"></i></a>
                         <a class="p-1 text-danger delete" val-servicio="{{$servicio->id}}"><i

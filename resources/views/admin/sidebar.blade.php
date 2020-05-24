@@ -67,6 +67,13 @@
                         <p>Mi Inicio</p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('turnos.misTurnos')}}"
+                        class="nav-link  {{ (request()->routeIs('turnos.*')) ? 'active' : '' }}">
+                        <i class="fal fa-circle-notch nav-icon"></i>
+                        <p>Mis turnos en esperas</p>
+                    </a>
+                </li>
 
                 {{-- Listado desplegable para agrupar elementos --}}
                 {{-- <li class="nav-item has-treeview menu-open">

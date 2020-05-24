@@ -16,7 +16,7 @@ class Turno extends Model
 
     public function usuario()
     {
-        return $this->belongsTo(User::class , 'user_id');
+        return $this->belongsTo(User::class);
     }
     public function horario()
     {
@@ -27,7 +27,8 @@ class Turno extends Model
         return $this->hasMany(Foto::class);
     }
 
-    public function getFecha(){
+    public function getFecha()
+    {
         $f = Carbon::create($this->fecha) ;
         return $f->isoFormat('dddd, D MMM YYYY');
     }

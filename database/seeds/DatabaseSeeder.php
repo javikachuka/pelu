@@ -1,6 +1,8 @@
 <?php
 
+use Cardumen\ArgentinaProvinciasLocalidades\Commands\CargarProvinciasLocalidades;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Artisan::call('provincias-localidades:cargar');
         $this->call([
             DiasSeeder::class,
             RolSeed::class,

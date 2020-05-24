@@ -13,6 +13,7 @@ class EmpresaSeed extends Seeder
      */
     public function run()
     {
+        
         $direc = Direccion::create([
             'pais_id' => 1,
             'provincia_id' => 1,

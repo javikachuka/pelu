@@ -12,13 +12,12 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Date;
+
 //si quiere que haya un lapso de 30 minutos debe agregar 10 minutos mas osea ingresar 40.
 // si ingresa 40 el sistema le calculo los turnos con un minimo de 30 minutos y maximo 40.
-define("_MINUTOS_ESPACIOS_",    30);
+define("_MINUTOS_ESPACIOS_", 30);
 class TurnoController extends Controller
 {
-
-
     public function index()
     {
         $turnos = Turno::all();
@@ -84,6 +83,7 @@ class TurnoController extends Controller
         return redirect()->route('turnos.index');
     }
 
+
     public function getIntervalos(Request $request)
     {
         $newDate = $this->cambiarFormatoFecha($request->fecha);
@@ -101,7 +101,6 @@ class TurnoController extends Controller
 
 
         if (sizeof($horariosLaboral) <= 0) {
-
             return ['disponible' => false];
         }
         $fechaDeHoy = date('Y-m-d');
@@ -121,7 +120,6 @@ class TurnoController extends Controller
 
             //si existen turnos se extraen los espacios en blancos o las horas donde hay lugar para turnos
             if (sizeof($turnosMismaFecha) > 0) {
-
                 $horaActual = $horario->comienzo;
                 $horaAnterior = $horaActual;
 
@@ -136,7 +134,6 @@ class TurnoController extends Controller
                         //si llego aca es porque hay minutos disponibles en el horario laboral
                         if ($sumarUnaVez) {
                             if ($turno->hora >= date('H:i:s')) {
-
                                 $horaAnterior = date('H:i:') . '00';
                                 $horaAnterior = $this->sumarMinutos($horaAnterior, _MINUTOS_ESPACIOS_);
                                 $horaAnterior = $this->redondearMinuto($horaAnterior);
@@ -153,12 +150,9 @@ class TurnoController extends Controller
                     $minutos = intval($this->todoMinutos($diferenciahora));
 
                     if (($minutos) >= $duracion) {
-
-
                         $cantidadIntervalos = intval($minutos / $duracion);
                         //se agregan todos las horas disponibles en intervalos de la duracion del servicio
                         for ($i = 0; $i < $cantidadIntervalos; $i++) {
-
                             $horariosDisponibles->add($horaAnterior);
                             $horaAnterior = $this->sumarMinutos($horaAnterior, $duracion);
                         }
@@ -173,14 +167,12 @@ class TurnoController extends Controller
                 $diferenciahora = date("H:i:s", strtotime("00:00:00") + strtotime($horaActual) - strtotime($horaAnterior));
                 $minutos = intval($this->todoMinutos($diferenciahora));
                 if (($minutos) >= $duracion) {
-
                     $cantidadIntervalos = intval($minutos / $duracion);
                     //se agregan todos las horas disponibles en intervalos de la duracion del servicio
                     for ($i = 0; $i < $cantidadIntervalos; $i++) {
                         if ($esHoy) {
                             $horaDeHoy = date('H:i:s');
                             if ($horaAnterior >= $horaDeHoy) {
-
                                 $horariosDisponibles->add($horaAnterior);
                             }
                         } else {
@@ -211,7 +203,6 @@ class TurnoController extends Controller
                 $cantidadIntervalos = intval($minutos / $duracion);
 
                 for ($i = 0; $i < $cantidadIntervalos; $i++) {
-
                     $horariosDisponibles->add($horaAnterior);
                     $horaAnterior = $this->sumarMinutos($horaAnterior, $duracion);
                 }
@@ -300,5 +291,13 @@ class TurnoController extends Controller
         ];
 
         $this->validate($request, $rules);
+    }
+
+    public function misTurnos()
+    {
+        if (auth()->user()) {
+            return $turnos = (User::find(auth()->user()->id))->turnos;
+        }
+        return 1;
     }
 }

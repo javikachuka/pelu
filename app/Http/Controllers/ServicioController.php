@@ -54,7 +54,6 @@ class ServicioController extends Controller
 
     public function delete(Request $request, $id)
     {
-
         $usuarioSesion = auth()->user();
         $servicio = Servicio::find($id);
 
