@@ -5,13 +5,34 @@
     <div class="card-header">
         <h3>Creacion de Horario Laboral</h3>
         <ul>
-            <li>El horario implica que se trabaja de corrido desde la hora de inicio a la hora de fin</li>
-            <li>Recuerde que puede crear mas de un horario, es por eso que se solicita dar un nombre al horario</li>
+            <li>El horario implica que se trabaja de corrido desde la hora de inicio a la hora de fin.</li>
+            <li>Recuerde que puede crear mas de un horario, es por eso que se solicita dar un nombre al horario.</li>
+            <li>
+
+
+                <p style="color: red"> ¡IMPORTANTE!
+                    Si el horario fijo esta seleccionado se utilizara ese
+                    horario
+                    para todos los servicios que se creen despues.
+                </p>
+
+            </li>
         </ul>
     </div>
     <form class="form-group " method="POST" action="{{route("horarios.save")}}">
         <div class="card-body">
             @include('messageError')
+            <div class="form-group ">
+
+
+
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input"  name="fijo" id="fijo">
+                    <label for="fijo" class="custom-control-label">Horario Fijo</label>
+
+                </div>
+
+            </div>
             <div class="form-group ">
                 <label for="nombre">Nombre del Horario</label>
                 <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}"

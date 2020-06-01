@@ -24,6 +24,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href=" {{asset('css/bootstrap-datepicker.min.css')}} ">
     {{-- Toastr (es para alertas) --}}
     <link rel="stylesheet" href=" {{asset('admin-lte/plugins/toastr/toastr.min.css')}} ">
+    {{-- Multiselect --}}
+    <link rel="stylesheet" href="{{asset('admin-lte/plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+    {{-- Checkbox --}}
+    <link rel="stylesheet" href="{{asset('admin-lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
 
 </head>
 
@@ -117,7 +122,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </script>
     {{-- Input mask --}}
     <script src="{{asset('admin-lte/plugins/inputmask/jquery.inputmask.js')}}"></script>
-
+    {{-- Multiselect --}}
+    <script src="{{asset('admin-lte/plugins/select2/js/select2.full.min.js')}}"></script>
+    <script>
+        $('.select2').select2({theme: 'bootstrap4'});
+    </script>
     @stack('scripts')
 </body>
 

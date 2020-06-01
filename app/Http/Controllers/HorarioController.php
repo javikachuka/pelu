@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Validator;
 
 class HorarioController extends Controller
 {
-
     public function index()
     {
         $horarios = Horario::all();
@@ -63,6 +62,7 @@ class HorarioController extends Controller
         $horario->nombre = $request->nombre;
         $horario->comienzo = $request->comienzo;
         $horario->fin = $request->fin;
+        $horario->fijo = is_null($request->fijo)?0 : 1;
         $horario->empresa_id = auth()->user()->empresa_id;
         $horario->save();
         $horario->dias()->sync($request->dias);

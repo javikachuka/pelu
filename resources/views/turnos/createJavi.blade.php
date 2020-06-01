@@ -83,7 +83,7 @@
                 }else{
                     var html_select = '<option value="" selected disabled>--Seleccione--</option>' ;
                     $('#horario').html(html_select);
-                    alert('El dia seleccionado no se trabaja');
+                    alert('El dia seleccionado no se realiza el servicio');
 
                 }
             });
@@ -91,6 +91,8 @@
     });
 
     $('#servicio').change(function(){
+        var html_select = '<option value="" selected disabled>--Seleccione--</option>' ;
+                    $('#horario').html(html_select);
         var id_ser = $(this).val() ;
         var url = "{{ route('servicios.getDuracion' , ':id') }}" ;
         url = url.replace(':id' , id_ser) ;
@@ -98,11 +100,12 @@
         //AJAX
         $.get(url ,function(data){
             console.log(data);
-            html += '<p> El servicio dura apox. '+data+' </p>' ;
-            $('#info').html(html);
-        });
+           
+            $('#info').html(data);
+        },'html');
 
     }) ;
+    //fuente https://api.jquery.com/jQuery.get/
 </script>
 
 @endpush

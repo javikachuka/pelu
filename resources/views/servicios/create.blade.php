@@ -32,10 +32,32 @@
             </div>
             <div class="form-group">
                 <label for="descripcion">Descripcion</label>
-                <textarea name="descripcion" id="descripcion" cols="30" rows="5" class="form-control"
+                <textarea name="descripcion" id="descripcion" cols="30" rows="2" class="form-control"
                     value={{ old('descripcion') }}> </textarea>
             </div>
+            <hr>
+            <h3> Horarios</h3>
+            <div class="form-group">
+                <label for="descripcion">Utilizar Horarios Fijos: <div class="icheck-success d-inline">
+                        <input type="checkbox" checked name="fijo" id="fijo">
+                        <label for="fijo">
+                        </label>
+                    </div>
+                </label>
+            </div>
+            <div class="form-group">
+
+                <label for="descripcion">Utilizar Horario Personalizado</label>
+                <select name="horariosSeleccionado[]" id="horariosSeleccionado" class="select2 form-control"
+                    multiple="multiple" data-placeholder="Puede seleccionar muchos horarios" disabled>
+                    @foreach ($horarios as $horario)
+                    <option value="{{$horario->id}}">{{$horario->nombre}}</option>
+                    @endforeach
+                </select>
+
+            </div>
         </div>
+
 
         <div class="float-right mr-4">
             <a href="javascript:history.back()" class="btn btn-danger btn-sm">Cancelar</a>
@@ -46,3 +68,29 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(
+        function(){
+            $('#horariosSeleccionado').removeAttr('disabled');
+            $('#horariosSeleccionado').attr('disabled',true);
+            $('#fijo').removeAttr('checked');
+            $('#fijo').attr('checked',true);
+        }
+    );
+    $('#fijo').change(
+        function(){
+
+            if($('#fijo').is(':checked')){
+                $('#horariosSeleccionado').attr('disabled',true);
+                $('#horariosSeleccionado').attr('required');
+            }else{ 
+                $('#horariosSeleccionado').removeAttr('disabled');
+                $('#horariosSeleccionado').removeAttr('required');
+            }
+        }
+    );
+
+</script>
+@endpush

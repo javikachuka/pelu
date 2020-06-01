@@ -18,7 +18,10 @@ class CreateHorariosTable extends Migration
             $table->string('nombre')->nullable() ;
             $table->time('comienzo') ;
             $table->time('fin') ;
-            $table->boolean('activo')->default(1) ;
+            //en caso que se tenga que suspender un horario or algun tiempo
+            $table->boolean('activo')->default(1);
+            //si el horario es por defecto. puede haber muchos
+            $table->boolean('fijo');
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->softDeletes() ;

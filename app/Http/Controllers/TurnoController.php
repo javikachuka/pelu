@@ -91,13 +91,32 @@ class TurnoController extends Controller
         $fechaSeleccionada =  date($newDate);
         //se busca el servicio que selecciono el cliente
         $servicio = Servicio::find($request->servicio);
+
         $duracion = intval($this->todoMinutos($servicio->duracion));
         //numero del dia de la semana empezando por Domingo(0), Lunes(1)
         $dia = date('N', strtotime($newDate));
         $dia = intval($dia) == 7 ? 0 : $dia;
         $day = Dia::find($dia);
         //todos los horarios que tienen el dia seleccionado
-        $horariosLaboral = $day->horarios;
+        $existeElServicio=false;
+        //buscamos si el dia que selecciono el usuario existe.
+        foreach ($servicio->horarios as $horario2) {
+            foreach ($horario2->dias as  $dia2) {
+                if ($dia2->id == $dia) {
+                    $existeElServicio=true;
+                    break;
+                }
+            }
+            if ($existeElServicio) {
+                break;
+            }
+        }
+        if (!$existeElServicio) {
+            return ['disponible' => false];
+        }
+
+
+        $horariosLaboral = $servicio->horarios;
 
 
         if (sizeof($horariosLaboral) <= 0) {

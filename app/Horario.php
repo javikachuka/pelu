@@ -19,4 +19,9 @@ class Horario extends Model
     {
         return $this->belongsTo(Empresa::class);
     }
+    //many to many
+    public function servicios()
+    {
+        return $this->belongsToMany(Servicio::class, 'horarios_servicios');
+    }
 }
