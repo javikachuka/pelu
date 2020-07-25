@@ -47,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('turnos/fotos/{id}', 'TurnoController@fotos')->name('turnos.fotos');
     Route::get('turnos/ver/{id}', 'TurnoController@show')->name('turnos.show');
     Route::post('turnos/fotos', 'TurnoController@saveFotos')->name('turnos.saveFotos');
-    Route::get('misTurnos', 'TurnoController@misTurnos')->name('turnos.misTurnos');
+    Route::get('misTurnos', 'TurnoController@misTurnos')->name('misTurnos.misTurnos');
 });
 
 //esta ruta va a permitir el registro de una empresa
@@ -60,6 +60,7 @@ Route::get('/{slug}/registroClientes', 'UserController@createRegistroClientesEmp
 //esta ruta va a permitir el registro de cualquier usuario que quiera reservar turnos
 Route::get('/registroClientes', 'UserController@createRegistroClientes')->name('users.createRegistroClientes');
 
+Route::get('/redireccion', 'EmpresaController@redireccion')->name('empresas.redireccion');
 Route::get('/{slug}', 'EmpresaController@index')->name('empresas.index');
 
 //carga de provincias
