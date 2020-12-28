@@ -5,7 +5,7 @@ En esta seccion escribimos las tareas pendientes, nuevas ideas o arreglos.
 
 
 ***Mas importante***
-- [ ] relacionar horarios con servicios
+- [x] relacionar horarios con servicios
 - [ ] cancelar turno con sus verificaciones
 - [ ] cambiar estado de turno con el boton verde 
 - [ ] permitir el registro de un peluquero y que luego cargue datos de la empresa
